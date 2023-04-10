@@ -1,0 +1,33 @@
+query Users {
+	users {
+    id
+    email
+    gender
+    fullName
+    phoneNumber
+    identityCode
+    metaMaskPublicKey
+    contract {
+      id
+      address
+      seller {
+        id
+      }
+    }
+    merchantMetaData {
+      id
+      companyName
+      companyIdentify
+      businessField
+      websiteUrl
+      storeLocation
+      note
+        merchantSecretKey
+    }
+    ordersAsBuyer {
+      id
+      decentralizedId
+      price
+    }
+  }
+}
