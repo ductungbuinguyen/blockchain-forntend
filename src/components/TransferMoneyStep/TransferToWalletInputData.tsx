@@ -45,7 +45,7 @@ const TransferToWalletInputData = ({
 						note: ''
 					}} onSubmit={onSubmit}>
 						{(form) => (
-							<Form onChange={() => console.log("errors", form.errors)}>
+							<Form>
 								<div className='flex flex-col gap-6'>
 									<TransferMoneyInputItem
 										inputType='amount'
