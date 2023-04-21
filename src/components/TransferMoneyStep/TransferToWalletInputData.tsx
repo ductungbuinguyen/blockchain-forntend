@@ -4,7 +4,7 @@ import AppHeaderWrapper from '../AppHeaderWrapper';
 import { Form, Formik } from 'formik';
 import TransferMoneyInputItem from '../FormItem/TransferMoneyInputItem';
 import { IValidateType, fieldValidator } from '../../utils/formikValidator';
-import TransferMoneyNoteItem from '../FormItem/TransferMoneyNoteItem';
+import AppNoteItem from '../FormItem/TransferMoneyNoteItem';
 import AppButtonPrimary from '../AppButtonPrimary';
 
 interface TransferToWalletInputDataProps {
@@ -57,7 +57,7 @@ const TransferToWalletInputData = ({
 											})
 										}
 									/>
-									<TransferMoneyNoteItem name='note' />
+									<AppNoteItem inputType='transferMoneyNote' name='note' />
 								</div>
 								<div className='absolute bottom-0 left-0 w-full px-4 py-2 bg-white'>
 									<AppButtonPrimary

@@ -1,0 +1,17 @@
+mutation RegisterMerchant($registerMerchantInput: RegisterMerchantInput!) {
+	registerMerchant(registerMerchantInput: $registerMerchantInput) {
+		code
+		success
+		merchantMetaData {
+      id
+      companyName
+      companyIdentify
+      businessField
+      websiteUrl
+      storeLocation
+      note
+      merchantSecretKey
+      __typename
+    }
+	}
+}

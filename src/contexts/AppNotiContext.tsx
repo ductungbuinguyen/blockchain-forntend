@@ -18,7 +18,7 @@ export const AppNotiContext = createContext<IAppNotiContext>({
 export const useAppNoti = () => useContext(AppNotiContext)
 
 const AppNotiContextProvider = ({ children }: { children: ReactNode }) => {
-  const [isShowNoti, setIsShowNoti] = useState(true)
+  const [isShowNoti, setIsShowNoti] = useState(false)
   const [title, setTitle] = useState("title")
   const [description, setDescription] = useState("description")
 

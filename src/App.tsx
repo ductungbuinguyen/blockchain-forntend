@@ -7,6 +7,9 @@ import { useAuthContext } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import ConnectWallet from './pages/ConnectWallet';
 import TransferMoney from './pages/TransferMoney';
+import Merchant from './pages/Merchant';
+import OrderBuyListing from './pages/OrderBuyListing';
+import ActivityHistory from './pages/ActivityHistory';
 
 function App() {
 	const [loading, setLoading] = useState(true);
@@ -19,7 +22,7 @@ function App() {
 		};
 
 		authenticate();
-	}, [checkAuth]);
+	}, [checkAuth]);	
 
 	if (loading) return <h1>LOADING....</h1>;
 	return (
@@ -28,6 +31,9 @@ function App() {
 				<Route path='/'>
 					<Route index element={<ProtectedRoute><Home /></ProtectedRoute>} />
 					<Route path='transfer-money' element={<ProtectedRoute><TransferMoney /></ProtectedRoute>} />
+					<Route path='register-merchant' element={<ProtectedRoute><Merchant /></ProtectedRoute>} />
+					<Route path='order-listing' element={<ProtectedRoute><OrderBuyListing /></ProtectedRoute>} />
+					<Route path='activity-history' element={<ProtectedRoute><ActivityHistory /></ProtectedRoute>} />
 					<Route path='connect-wallet' element={<ConnectWallet/>}/>
 					<Route path='login' element={<Login />} />
 					<Route path='register' element={<Register />} />

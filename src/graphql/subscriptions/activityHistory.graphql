@@ -1,0 +1,77 @@
+subscription activityHistory {
+  activityHistory {
+    id
+    sender {
+      id
+      email
+      gender
+      fullName
+      phoneNumber
+      identityCode
+      metaMaskPublicKey
+      base64Avatar
+      __typename
+    }
+    type
+    receiver {
+      id
+      email
+      gender
+      fullName
+      phoneNumber
+      identityCode
+      metaMaskPublicKey
+      base64Avatar
+      __typename
+    }
+    receiverAddress
+    targetOrder {
+      id
+      decentralizedId
+      price
+      shipDeadline
+      confirmDeadline
+      buyer {
+        id
+        email
+        gender
+        fullName
+        phoneNumber
+        identityCode
+        metaMaskPublicKey
+        base64Avatar
+        __typename
+      }
+      contract {
+        id
+        address
+        seller {
+          id
+          email
+          gender
+          fullName
+          phoneNumber
+          identityCode
+          metaMaskPublicKey
+          base64Avatar
+          __typename
+        }
+        __typename
+      }
+      status
+      orderTime
+      base64QrCode
+      creationTime
+      name
+      __typename
+    }
+    targetContract {
+      id
+      address
+      __typename
+    }
+    transactionHash
+    creationTime
+    __typename
+  }
+}

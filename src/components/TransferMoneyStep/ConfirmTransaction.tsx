@@ -66,7 +66,7 @@ const ConfirmTransaction = ({
 			</div>
 			<div className='absolute bottom-0 left-0 w-full px-4 py-2 bg-white'>
 				<AppButtonPrimary onClick={() => onOkClick({
-          receiver: metaMaskPublicKey as string,
+          receiver: metaMaskPublicKey || address as string,
           value: String(amount),
         })}>Chuyển tiền</AppButtonPrimary>
 			</div>

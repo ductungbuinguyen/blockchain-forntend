@@ -1,15 +1,38 @@
 import { useMemo, useState } from 'react';
 import SelectTransferType from '../components/TransferMoneyStep/SelectTransferType';
 import { IStepHistory, TransferMoneyStep } from '../interfaces/transferMoney';
-import TransferToWalletSelectDestinationStep from '../components/TransferMoneyStep/TransferToWalletSelectDestinationStep';
+import TransferToWalletSelectReceiverStep from '../components/TransferMoneyStep/TransferToWalletSelectReceiverStep';
 import TransferToWalletInputData from '../components/TransferMoneyStep/TransferToWalletInputData';
 import ConfirmTransaction from '../components/TransferMoneyStep/ConfirmTransaction';
 import { useContractContext } from '../contexts/ContractContext';
 import TransferSuccess from '../components/TransferMoneyStep/TransferSuccess';
 import TransferToAddress from '../components/TransferMoneyStep/TransferToAddress';
+import { ActivityHistoryType, UserDocument, UserQuery, useCreateActivityHistoryMutation } from '../generated/graphql';
 
 const TransferMoney = () => {
 	const { transferMoney } = useContractContext();
+	const [createActivityHistory] = useCreateActivityHistoryMutation({
+		update(cache, { data: dataResponse }) {
+			cache.updateQuery<Omit<UserQuery, '__typename'>>(
+				{
+					query: UserDocument,
+				},
+				(data) => {
+					const { activityHistory, success } = dataResponse?.createActivityHistory ?? {}
+					console.log("response", data)
+					if(!success) return data
+					let user = JSON.parse(JSON.stringify(data?.user));
+					user.activityHistoriesAsSender = [
+						...(user.activityHistoriesAsSender ?? []),
+						{
+							...activityHistory,
+							__typename: 'ActivityHistory',
+						},
+					];
+					return { user }
+				})
+		}
+	})
 	const [stepHistory, setStepHistory] = useState<IStepHistory>([
 		{
 			key: TransferMoneyStep.SELECT_TRANSFER_TYPE,
@@ -32,7 +55,7 @@ const TransferMoney = () => {
 							setStepHistory((prev) => [
 								...prev,
 								{
-									key: TransferMoneyStep.TRANSFER_TO_WALLET_SELECT_DESTINATION,
+									key: TransferMoneyStep.TRANSFER_TO_WALLET_SELECT_RECEIVER,
 								},
 							]);
 						} else {
@@ -46,9 +69,9 @@ const TransferMoney = () => {
 					}}
 				/>
 			);
-		case TransferMoneyStep.TRANSFER_TO_WALLET_SELECT_DESTINATION:
+		case TransferMoneyStep.TRANSFER_TO_WALLET_SELECT_RECEIVER:
 			return (
-				<TransferToWalletSelectDestinationStep
+				<TransferToWalletSelectReceiverStep
 					onBackButtonClick={onBackButtonClick}
 					searchValue={searchValue}
 					onSearchValueChange={(value) => {
@@ -84,7 +107,6 @@ const TransferMoney = () => {
 					userId={currentStepData?.userId}
 					onBackButtonClick={onBackButtonClick}
 					onSubmit={(values) => {
-						console.log('submit', values);
 						const { amount, note } = values;
 						setStepHistory((prev) => [
 							...prev,
@@ -116,6 +138,21 @@ const TransferMoney = () => {
 							console.error("error", error);
 						});
 						if(result) {
+							const resultCreateActivity = await createActivityHistory({
+								variables: {
+									createActivityHistoryInput: {
+										amount: Number(value),
+										transactionHash: result,
+										type: ActivityHistoryType.TransferMoney,
+										...address ? {
+											destinationAddress: address
+										} : {
+											destinationUserId: Number(userId)
+										}
+									}
+								},
+							})
+							console.log("resultCreateActivity", resultCreateActivity)
 							setStepHistory((prev) => [
 								...prev,
 								{

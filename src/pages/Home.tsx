@@ -43,18 +43,22 @@ const SERVICE_ITEMS = [
 	{
 		icon: TbArrowsRightLeft,
 		label: 'chuyển tiền',
+		url: 'transfer-money',
 	},
 	{
 		icon: BiMoneyWithdraw,
-		label: 'Rút tiền',
+		label: 'orders',
+		url: '/order-listing',
 	},
 	{
 		icon: MdInput,
 		label: 'Nạp tiền',
+		url: '/',
 	},
 	{
 		icon: MdStore,
 		label: 'Nhà bán hàng',
+		url: '/register-merchant',
 	},
 ];
 
@@ -88,7 +92,7 @@ const Home = () => {
 		</div>
 	) : (
 		<div className='relative w-screen h-screen bg-bcpayment-green-4'>
-			<AppHeaderWrapper bottomOffset={60}>
+			<AppHeaderWrapper bottomOffset={40}>
 				<div>
 					<FaBars
 						className='text-white text-[30px] cursor-pointer'
@@ -121,15 +125,15 @@ const Home = () => {
 					Dịch vụ
 				</p>
 				<div className='flex justify-between w-full'>
-					{SERVICE_ITEMS.map(({ icon: Icon, label }, index) => (
-						<div key={index} className='flex flex-col items-center gap-2'>
+					{SERVICE_ITEMS.map(({ icon: Icon, label, url }, index) => (
+						<Link to={url} key={index} className='flex flex-col items-center gap-2'>
 							<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center w-[50px] h-[50px]'>
 								<Icon className='text-[30px] text-bcpayment-green-1' />
 							</div>
 							<p className='text-[10px] font-semibold max-w-[50px] text-center'>
 								{label}
 							</p>
-						</div>
+						</Link>
 					))}
 				</div>
 			</div>
@@ -168,12 +172,12 @@ const Home = () => {
 					</span>
 					<span className='font-extrabold text-[10px]'>Nhà bán hàng</span>
 				</div>
-				<div className='flex flex-col items-center text-bcpayment-green-1/60 max-w-[50px] text-center'>
+				<Link to={'activity-history'} className='flex flex-col items-center text-bcpayment-green-1/60 max-w-[50px] text-center'>
 					<span className='text-[35px]'>
 						<BiHistory />
 					</span>
 					<span className='font-extrabold text-[10px]'>Lịch sử</span>
-				</div>
+				</Link>
 			</div>
 		</div>
 	);

@@ -1,27 +1,27 @@
 import { SlArrowLeft } from 'react-icons/sl';
 import AppHeaderWrapper from '../AppHeaderWrapper';
-import { User, useUsersQuery } from '../../generated/graphql';
-import { useAuthContext } from '../../contexts/AuthContext';
+import { User, useUserQuery, useUsersQuery } from '../../generated/graphql';
 
-interface TransferToWalletSelectDestinationStepProps {
+interface TransferToWalletSelectReceiverStepProps {
 	searchValue: string;
 	onSearchValueChange: (value: string) => void;
 	onBackButtonClick: () => void;
 	onSelectDestination: (userId: User['id']) => void;
 }
 
-const TransferToWalletSelectDestinationStep = ({
+const TransferToWalletSelectReceiverStep = ({
 	onBackButtonClick,
 	onSearchValueChange,
 	searchValue,
 	onSelectDestination,
-}: TransferToWalletSelectDestinationStepProps) => {
-	const { data, loading } = useUsersQuery();
-	const { userInfo } = useAuthContext();
-	const ortherUsers = data?.users
-		? data.users.filter((user) => {
+}: TransferToWalletSelectReceiverStepProps) => {
+	const { data: users, loading } = useUsersQuery();
+	const { data } = useUserQuery();
+	const { id } = data?.user ?? {}
+	const ortherUsers = users?.users
+		? users.users.filter((user) => {
       const isMatchSearchValue = searchValue ? user?.email?.toLowerCase()?.includes(searchValue?.toLowerCase()) || user?.phoneNumber?.toLowerCase()?.includes(searchValue?.toLowerCase()) : true
-      return isMatchSearchValue && user?.id !== userInfo?.id
+      return isMatchSearchValue && user?.id !== id
     })
 		: [];
 	if (loading) return <h1>Loading...</h1>;
@@ -36,7 +36,7 @@ const TransferToWalletSelectDestinationStep = ({
 				</div>
 			</AppHeaderWrapper>
 			<div className='relative w-full px-[20px] h-full'>
-				<div className='pt-8 bg-white rounded-t-xl px-[15px] shadow w-full h-full'>
+			<div className='pt-8 bg-white rounded-t-xl px-[15px] shadow w-full h-full'>
 					<input
 						className='bg-bcpayment-green-3 w-full py-1 px-3 text-white rounded-[15px] placeholder:text-white focus-visible:outline-none placeholder:text-center text-center'
 						placeholder='Nhập gmail hoặc số điện thoại'
@@ -108,4 +108,4 @@ const TransferToWalletSelectDestinationStep = ({
 	);
 };
 
-export default TransferToWalletSelectDestinationStep;
+export default TransferToWalletSelectReceiverStep;

@@ -1,0 +1,152 @@
+query user {
+  user {
+    id
+    email
+    gender
+    fullName
+    identityCode
+    metaMaskPublicKey
+    phoneNumber
+    contract {
+      id
+      address
+      orders {
+        id
+        decentralizedId
+        price
+        shipDeadline
+        confirmDeadline
+        buyer {
+          id
+          email
+          gender
+          fullName
+          phoneNumber
+          identityCode
+          metaMaskPublicKey
+          base64Avatar
+          __typename
+        }
+        status
+        orderTime
+        activityHistories {
+          id
+          type
+          transactionHash
+          creationTime
+          __typename
+        }
+        base64QrCode
+        creationTime
+        name
+        __typename
+      }
+      activityHistory {
+        id
+        type
+        transactionHash
+        creationTime
+        __typename
+      }
+      __typename
+    }
+    merchantMetaData {
+      id
+      companyName
+      companyIdentify
+      businessField
+      websiteUrl
+      storeLocation
+      note
+      merchantSecretKey
+      __typename
+    }
+    ordersAsBuyer {
+      id
+      decentralizedId
+      price
+      shipDeadline
+      confirmDeadline
+      contract {
+        id
+        address
+        seller {
+          id
+          email
+          gender
+          fullName
+          phoneNumber
+          identityCode
+          metaMaskPublicKey
+          merchantMetaData {
+            id
+            companyName
+            companyIdentify
+            businessField
+            websiteUrl
+            storeLocation
+            note
+            merchantSecretKey
+            __typename
+          }
+          base64Avatar
+          __typename
+        }
+        __typename
+      }
+      status
+      orderTime
+      activityHistories {
+        id
+        type
+        transactionHash
+        creationTime
+        __typename
+      }
+      creationTime
+      name
+      __typename
+    }
+    activityHistoriesAsSender {
+      id
+      type
+      amount
+      receiver {
+        id
+        email
+        gender
+        fullName
+        phoneNumber
+        identityCode
+        metaMaskPublicKey
+        base64Avatar
+        __typename
+      }
+      receiverAddress
+      transactionHash
+      creationTime
+      __typename
+    }
+    activityHistoriesAsReceiver {
+      id
+      sender {
+        id
+        email
+        gender
+        fullName
+        phoneNumber
+        identityCode
+        metaMaskPublicKey
+        base64Avatar
+        __typename
+      }
+      type
+      amount
+      creationTime
+      transactionHash
+      __typename
+    }
+    base64Avatar
+    __typename
+  }
+}

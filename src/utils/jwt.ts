@@ -6,19 +6,20 @@ const JWTManager = () => {
 
 	let inMemoryToken: string | null = null
 	let refreshTokenTimeoutId: number | null = null
-	let userInfo: User | null = null
+	let userId: User["id"] = null
 	
 
 	const getToken = () => inMemoryToken
-
-	const getUserInfo = () => userInfo
+	console.log("inMemoryToken", inMemoryToken)
+	const getUserId = () => userId
 
 	const setToken = (accessToken: string) => {
 		inMemoryToken = accessToken
+		console.log("accessToken", accessToken)
 
 		// Decode and set countdown to refresh
-		const decoded = jwtDecode<JwtPayload & { userInfo: User }>(accessToken)
-		userInfo = decoded.userInfo
+		const decoded = jwtDecode<JwtPayload & { userId: User['id'] }>(accessToken)
+		userId = decoded.userId
 		setRefreshTokenTimeout((decoded.exp as number) - (decoded.iat as number))
 		return true
 	}
@@ -66,7 +67,7 @@ const JWTManager = () => {
 		)
 	}
 
-	return { getToken, setToken, getRefreshToken, deleteToken, getUserInfo }
+	return { getToken, setToken, getRefreshToken, deleteToken, getUserId }
 }
 
 export default JWTManager()

@@ -1,6 +1,7 @@
-import { FieldAttributes, useField } from 'formik';
+import { useField } from 'formik';
 import { useEffect, useRef, useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io'
+import { FieldAttributes } from '../../interfaces/transferMoney';
 
 export type AuthSelectItemProps = FieldAttributes<string> & {
 	label: string;

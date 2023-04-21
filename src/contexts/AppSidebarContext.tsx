@@ -5,6 +5,7 @@ import { MdInput, MdOutlineOutput } from 'react-icons/md';
 import { TbArrowsRightLeft } from 'react-icons/tb';
 import { HiQrcode } from 'react-icons/hi';
 import AppButtonPrimary from '../components/AppButtonPrimary';
+import { useUserQuery } from '../generated/graphql';
 
 const SIDEBAR_ACTIONS = [
 	{
@@ -36,9 +37,9 @@ export const useAppSidebar = () => useContext(AppSidebarContext);
 
 const AppSidebarContextProvider = ({ children }: { children: ReactNode }) => {
 	const [isShowSidebar, setIsShowSidebar] = useState(false);
-	const { userInfo } = useAuthContext();
+	const { data } = useUserQuery();
+	const { fullName, email, phoneNumber } = data?.user ?? {}
   const { logoutClient } = useAuthContext();
-	const { fullName, email, phoneNumber } = userInfo ?? {};
 
 	const open = () => {
 		setIsShowSidebar(true);

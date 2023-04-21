@@ -1,0 +1,38 @@
+mutation CreateActivityHistory($createActivityHistoryInput: CreateActivityHistoryInput) {
+  createActivityHistory(createActivityHistoryInput: $createActivityHistoryInput) {
+    code
+    success
+    message
+    activityHistory {
+      id
+      sender {
+        id
+        email
+        gender
+        fullName
+        phoneNumber
+        identityCode
+        metaMaskPublicKey
+        base64Avatar
+        __typename
+      }
+      type
+      receiver {
+        id
+        email
+        gender
+        fullName
+        phoneNumber
+        identityCode
+        metaMaskPublicKey
+        base64Avatar
+        __typename
+      }
+      receiverAddress
+      transactionHash
+      creationTime
+      __typename
+    }
+    __typename
+  }
+}

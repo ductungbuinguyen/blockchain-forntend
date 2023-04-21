@@ -12,8 +12,8 @@ import { User } from '../generated/graphql'
 
 interface IAuthContext {
 	isAuthenticated: boolean
-	userInfo: User | null
-	setUserInfo: Dispatch<SetStateAction<User | null>>
+	userId: User["id"] | null
+	setUserId: Dispatch<SetStateAction<User["id"] | null>>
 	setIsAuthenticated: Dispatch<SetStateAction<boolean>>
 	checkAuth: () => Promise<void>
 	logoutClient: () => void
@@ -22,9 +22,9 @@ interface IAuthContext {
 const defaultIsAuthenticated = false
 
 export const AuthContext = createContext<IAuthContext>({
-	userInfo: null,
+	userId: null,
 	isAuthenticated: defaultIsAuthenticated,
-	setUserInfo: () => {},
+	setUserId: () => {},
 	setIsAuthenticated: () => {},
 	checkAuth: () => Promise.resolve(),
 	logoutClient: () => {}
@@ -34,21 +34,24 @@ export const useAuthContext = () => useContext(AuthContext)
 
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(defaultIsAuthenticated)
-	const [userInfo, setUserInfo] = useState<User | null>(null)
-
+	const [userId, setUserId] = useState<User["id"]>(null)
+	console.log("userId", userId)
 	const checkAuth = useCallback(async () => {
 		const token = JWTManager.getToken()
+		console.log('token', token)
 		if (token) {
 			setIsAuthenticated(true)
-			const decodedUserInfo = JWTManager.getUserInfo()
-			setUserInfo(decodedUserInfo)
+			const userId = JWTManager.getUserId()
+			console.log('userid', userId)
+			setUserId(userId)
 		}
 		else {
 			const success = await JWTManager.getRefreshToken()
 			if (success) {
 				setIsAuthenticated(true)
-				const decodedUserInfo = JWTManager.getUserInfo()
-				setUserInfo(decodedUserInfo)
+				const userId = JWTManager.getUserId()
+				console.log('userid', userId)
+				setUserId(userId)
 			}
 		}
 	}, [])
@@ -61,8 +64,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 	const authContextData = {
 		isAuthenticated,
 		setIsAuthenticated,
-		userInfo,
-		setUserInfo,
+		userId,
+		setUserId,
 		checkAuth,
 		logoutClient
 	}

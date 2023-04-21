@@ -1,6 +1,7 @@
-import { FieldAttributes, useField } from 'formik';
+import { useField } from 'formik';
 import { useState } from 'react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
+import { FieldAttributes } from '../../interfaces/transferMoney';
 
 export type AuthPasswordItemProps = FieldAttributes<string> & {
 	label: string;

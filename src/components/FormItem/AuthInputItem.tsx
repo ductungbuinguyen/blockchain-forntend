@@ -1,4 +1,5 @@
-import { FieldAttributes, useField } from 'formik';
+import { useField } from 'formik';
+import { FieldAttributes } from '../../interfaces/transferMoney';
 
 export type AuthInputItemProps = FieldAttributes<string> & {
 	label: string;

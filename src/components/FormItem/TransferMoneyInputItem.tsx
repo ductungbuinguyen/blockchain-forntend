@@ -1,4 +1,5 @@
-import { FieldAttributes, useField } from 'formik';
+import { useField } from 'formik';
+import { FieldAttributes } from '../../interfaces/transferMoney';
 
 type TransferMoneyInputItemProps = FieldAttributes<number | string> & {
 	inputType: 'amount' | 'address';

@@ -9,15 +9,16 @@ import {
 	useState,
 } from 'react';
 import { MetaMaskInpageProvider } from '@metamask/providers';
-import { useAuthContext } from './AuthContext';
-import { BigNumber, Contract, providers, utils } from 'ethers';
+import { BigNumber, Contract, constants, providers, utils } from 'ethers';
 import IEcommerceShop from '../assets/ABIs/IEcommerceShop.json';
+import IEShopFactory from '../assets/ABIs/IEShopFactory.json';
 import {
 	IBuyParams,
 	IContractContext,
 	ITimeoutParams,
 	ITransferMoneyParams,
 } from '../interfaces/contractContext';
+import { useUserLazyQuery } from '../generated/graphql';
 
 new MetaMaskSDK({
 	useDeeplink: false,
@@ -33,6 +34,7 @@ export const ContractContext = createContext<IContractContext>({
 	ship: () => Promise.resolve(),
 	timeout: () => Promise.resolve(),
 	transferMoney: () => Promise.resolve(),
+	deployECommerceContract: () => Promise.resolve(),
 });
 
 export const useContractContext = () => useContext(ContractContext);
@@ -72,21 +74,23 @@ const ContractContextProvider = ({ children }: { children: ReactNode }) => {
 		_getBalance(account)
 	}, [account])
 
-	const { userInfo } = useAuthContext();
+	const [getData, { data }] = useUserLazyQuery();
+	console.log("data", data)
+	const { metaMaskPublicKey } = data?.user ?? {};
 
 	const isConnectedWithRightChainAndRightAccount = useMemo(() => {
 		console.log('account checker', account.toLowerCase());
 		console.log(
 			'metamask public key',
-			userInfo?.metaMaskPublicKey?.toLowerCase()
+			metaMaskPublicKey?.toLowerCase()
 		);
 		console.log('inner chainID', Number(process.env.REACT_APP_CHAIN_ID));
 		console.log('chainID', Number(chain));
 		return (
 			Number(chain) === Number(process.env.REACT_APP_CHAIN_ID) &&
-			account?.toLowerCase() === userInfo?.metaMaskPublicKey?.toLowerCase()
+			account?.toLowerCase() === metaMaskPublicKey?.toLowerCase()
 		);
-	}, [chain, account, userInfo?.metaMaskPublicKey]);
+	}, [chain, account, metaMaskPublicKey]);
 
 	const connectWallet = () => {
 		ethereum
@@ -102,6 +106,7 @@ const ContractContextProvider = ({ children }: { children: ReactNode }) => {
 					method: 'eth_chainId',
 				})) as string;
 				setChain(chainId);
+				getData()
 			})
 			.catch((e) => console.log('request accounts ERR', e));
 	};
@@ -112,7 +117,9 @@ const ContractContextProvider = ({ children }: { children: ReactNode }) => {
 		orderDecentralizedId,
 	}: IBuyParams) => {
 		const contract = new Contract(contractAddress, IEcommerceShop, signer);
-		return contract.buy([amount, orderDecentralizedId]);
+		return contract.buy([orderDecentralizedId], {
+			value: amount
+		});
 	};
 
 	const timeout = async ({
@@ -131,7 +138,24 @@ const ContractContextProvider = ({ children }: { children: ReactNode }) => {
 				value: utils.parseUnits(value, 'ether').toHexString(),
 			},
 		];
+		console.log("params", params);
 		return provider.send('eth_sendTransaction', params);
+	};
+
+	const deployECommerceContract = async (merchantAddress: string) => {
+		const eShopContractFactoryAddress =
+		process.env.REACT_APP_E_SHOP_CONTRACT_FACTORY_ADDRESS ||
+		'0x9b5192E2C2554272454E91b0CC61bF2408d00fca';
+		console.log("eShopContractFactoryAddress", eShopContractFactoryAddress)
+		const contract = new Contract(
+			eShopContractFactoryAddress,
+			IEShopFactory,
+			signer
+		);
+		console.log("merchantAddress", merchantAddress)
+		const result = await contract.deployEShop(merchantAddress, constants.AddressZero);
+		console.log('result deploy eshop', result)
+		return result;
 	};
 
 	return (
@@ -139,6 +163,7 @@ const ContractContextProvider = ({ children }: { children: ReactNode }) => {
 			value={{
 				accountBalance,
 				isConnectedWithRightChainAndRightAccount,
+				deployECommerceContract,
 				buy,
 				confirmShipping: () => Promise.resolve(),
 				connectWallet,

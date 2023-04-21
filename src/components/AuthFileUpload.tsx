@@ -1,6 +1,7 @@
-import { FieldAttributes, useField } from 'formik';
+import { useField } from 'formik';
 import { useRef } from 'react';
 import { TbCameraPlus } from 'react-icons/tb';
+import { FieldAttributes } from '../interfaces/transferMoney';
 
 const AuthFileUpload = (props: FieldAttributes<File | string | undefined>) => {
 	const [field, meta, helper] = useField(props);
