@@ -20,6 +20,7 @@ export type Scalars = {
 export type ActivityHistory = {
   __typename?: 'ActivityHistory';
   amount?: Maybe<Scalars['Float']>;
+  blockNumber?: Maybe<Scalars['Float']>;
   creationTime?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['ID']>;
   receiver?: Maybe<User>;
@@ -71,6 +72,7 @@ export type CreateActivityHistoryInput = {
 
 export type CreateOrderInput = {
   buyerAddress?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   nonce?: InputMaybe<Scalars['Float']>;
   price?: InputMaybe<Scalars['Float']>;
   shipDeadline?: InputMaybe<Scalars['Float']>;
@@ -108,7 +110,7 @@ export type InformationForCreateOrderResponse = IMutationResponse & {
   code?: Maybe<Scalars['Float']>;
   currentBlockTimestamp?: Maybe<Scalars['Float']>;
   message?: Maybe<Scalars['String']>;
-  nonce?: Maybe<Scalars['Float']>;
+  nonce?: Maybe<Scalars['String']>;
   success?: Maybe<Scalars['Boolean']>;
 };
 
@@ -323,7 +325,7 @@ export type RegisterMerchantMutation = { __typename?: 'Mutation', registerMercha
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename: 'UserInfoMetaData', id?: number | null, email?: string | null, gender?: Gender | null, fullName?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, phoneNumber?: string | null, base64Avatar?: string | null, contract?: { __typename: 'Contract', id?: string | null, address?: string | null, orders?: Array<{ __typename: 'Order', id?: string | null, decentralizedId?: string | null, price?: string | null, shipDeadline?: number | null, confirmDeadline?: number | null, status?: OrderStatus | null, orderTime?: number | null, base64QrCode?: string | null, creationTime?: any | null, name?: string | null, buyer?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null, activityHistories?: Array<{ __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, transactionHash?: string | null, creationTime?: any | null } | null> | null } | null> | null, activityHistory?: { __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, transactionHash?: string | null, creationTime?: any | null } | null } | null, merchantMetaData?: { __typename: 'MerchantMetaData', id?: string | null, companyName?: string | null, companyIdentify?: string | null, businessField?: string | null, websiteUrl?: string | null, storeLocation?: string | null, note?: string | null, merchantSecretKey?: string | null } | null, ordersAsBuyer?: Array<{ __typename: 'Order', id?: string | null, decentralizedId?: string | null, price?: string | null, shipDeadline?: number | null, confirmDeadline?: number | null, status?: OrderStatus | null, orderTime?: number | null, creationTime?: any | null, name?: string | null, contract?: { __typename: 'Contract', id?: string | null, address?: string | null, seller?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null, merchantMetaData?: { __typename: 'MerchantMetaData', id?: string | null, companyName?: string | null, companyIdentify?: string | null, businessField?: string | null, websiteUrl?: string | null, storeLocation?: string | null, note?: string | null, merchantSecretKey?: string | null } | null } | null } | null, activityHistories?: Array<{ __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, transactionHash?: string | null, creationTime?: any | null } | null> | null } | null> | null, activityHistoriesAsSender?: Array<{ __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, amount?: number | null, receiverAddress?: string | null, transactionHash?: string | null, creationTime?: any | null, receiver?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null } | null> | null, activityHistoriesAsReceiver?: Array<{ __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, amount?: number | null, creationTime?: any | null, transactionHash?: string | null, sender?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null } | null> | null } | null };
+export type UserQuery = { __typename?: 'Query', user?: { __typename: 'UserInfoMetaData', id?: number | null, email?: string | null, gender?: Gender | null, fullName?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, phoneNumber?: string | null, base64Avatar?: string | null, contract?: { __typename: 'Contract', id?: string | null, address?: string | null, orders?: Array<{ __typename: 'Order', id?: string | null, decentralizedId?: string | null, price?: string | null, shipDeadline?: number | null, confirmDeadline?: number | null, isBuyerConfirm?: boolean | null, isSellerConfirm?: boolean | null, status?: OrderStatus | null, orderTime?: number | null, base64QrCode?: string | null, creationTime?: any | null, name?: string | null, buyer?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null, activityHistories?: Array<{ __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, transactionHash?: string | null, creationTime?: any | null } | null> | null } | null> | null, activityHistory?: { __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, transactionHash?: string | null, creationTime?: any | null } | null } | null, merchantMetaData?: { __typename: 'MerchantMetaData', id?: string | null, companyName?: string | null, companyIdentify?: string | null, businessField?: string | null, websiteUrl?: string | null, storeLocation?: string | null, note?: string | null, merchantSecretKey?: string | null } | null, ordersAsBuyer?: Array<{ __typename: 'Order', id?: string | null, decentralizedId?: string | null, price?: string | null, shipDeadline?: number | null, confirmDeadline?: number | null, isBuyerConfirm?: boolean | null, isSellerConfirm?: boolean | null, status?: OrderStatus | null, orderTime?: number | null, creationTime?: any | null, name?: string | null, contract?: { __typename: 'Contract', id?: string | null, address?: string | null, seller?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null, merchantMetaData?: { __typename: 'MerchantMetaData', id?: string | null, companyName?: string | null, companyIdentify?: string | null, businessField?: string | null, websiteUrl?: string | null, storeLocation?: string | null, note?: string | null, merchantSecretKey?: string | null } | null } | null } | null, activityHistories?: Array<{ __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, transactionHash?: string | null, creationTime?: any | null } | null> | null } | null> | null, activityHistoriesAsSender?: Array<{ __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, amount?: number | null, receiverAddress?: string | null, transactionHash?: string | null, creationTime?: any | null, receiver?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null } | null> | null, activityHistoriesAsReceiver?: Array<{ __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, amount?: number | null, creationTime?: any | null, transactionHash?: string | null, sender?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null } | null> | null } | null };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -333,7 +335,7 @@ export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'U
 export type ActivityHistorySubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ActivityHistorySubscription = { __typename?: 'Subscription', activityHistory?: { __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, receiverAddress?: string | null, transactionHash?: string | null, creationTime?: any | null, sender?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null, receiver?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null, targetOrder?: { __typename: 'Order', id?: string | null, decentralizedId?: string | null, price?: string | null, shipDeadline?: number | null, confirmDeadline?: number | null, status?: OrderStatus | null, orderTime?: number | null, base64QrCode?: string | null, creationTime?: any | null, name?: string | null, buyer?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null, contract?: { __typename: 'Contract', id?: string | null, address?: string | null, seller?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null } | null } | null, targetContract?: { __typename: 'Contract', id?: string | null, address?: string | null } | null } | null };
+export type ActivityHistorySubscription = { __typename?: 'Subscription', activityHistory?: { __typename: 'ActivityHistory', id?: string | null, type?: ActivityHistoryType | null, receiverAddress?: string | null, transactionHash?: string | null, creationTime?: any | null, sender?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null, receiver?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null, targetOrder?: { __typename: 'Order', id?: string | null, decentralizedId?: string | null, price?: string | null, shipDeadline?: number | null, confirmDeadline?: number | null, isBuyerConfirm?: boolean | null, isSellerConfirm?: boolean | null, status?: OrderStatus | null, orderTime?: number | null, base64QrCode?: string | null, creationTime?: any | null, name?: string | null, buyer?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null, contract?: { __typename: 'Contract', id?: string | null, address?: string | null, seller?: { __typename: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, base64Avatar?: string | null } | null } | null } | null, targetContract?: { __typename: 'Contract', id?: string | null, address?: string | null } | null } | null };
 
 
 export const CreateActivityHistoryDocument = gql`
@@ -570,6 +572,8 @@ export const UserDocument = gql`
         price
         shipDeadline
         confirmDeadline
+        isBuyerConfirm
+        isSellerConfirm
         buyer {
           id
           email
@@ -621,6 +625,8 @@ export const UserDocument = gql`
       price
       shipDeadline
       confirmDeadline
+      isBuyerConfirm
+      isSellerConfirm
       contract {
         id
         address
@@ -828,6 +834,8 @@ export const ActivityHistoryDocument = gql`
       price
       shipDeadline
       confirmDeadline
+      isBuyerConfirm
+      isSellerConfirm
       buyer {
         id
         email

@@ -8,9 +8,11 @@ import { useContractContext } from '../contexts/ContractContext';
 import TransferSuccess from '../components/TransferMoneyStep/TransferSuccess';
 import TransferToAddress from '../components/TransferMoneyStep/TransferToAddress';
 import { ActivityHistoryType, UserDocument, UserQuery, useCreateActivityHistoryMutation } from '../generated/graphql';
+import { useAppNoti } from '../contexts/AppNotiContext';
 
 const TransferMoney = () => {
 	const { transferMoney } = useContractContext();
+	const { open } = useAppNoti()
 	const [createActivityHistory] = useCreateActivityHistoryMutation({
 		update(cache, { data: dataResponse }) {
 			cache.updateQuery<Omit<UserQuery, '__typename'>>(
@@ -20,6 +22,7 @@ const TransferMoney = () => {
 				(data) => {
 					const { activityHistory, success } = dataResponse?.createActivityHistory ?? {}
 					console.log("response", data)
+					const { receiverAddress, receiver} = activityHistory ?? {}
 					if(!success) return data
 					let user = JSON.parse(JSON.stringify(data?.user));
 					user.activityHistoriesAsSender = [
@@ -29,6 +32,10 @@ const TransferMoney = () => {
 							__typename: 'ActivityHistory',
 						},
 					];
+					open({
+						title: `Chuyển đến ${receiverAddress ? receiverAddress : receiver?.fullName} `,
+						description: 'Xem chi tiết tại lịch sử giao dịch thành công',
+					})
 					return { user }
 				})
 		}

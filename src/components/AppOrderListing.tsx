@@ -62,10 +62,9 @@ const AppOrderListing = ({ type }: AppOrderListingProps) => {
 									const { price, contract, creationTime, name, id } =
 										order ?? {};
 									const { fullName, base64Avatar } = contract?.seller ?? {};
-
 									return (
 										<div
-											onClick={() => open(<AppOrderDetail orderId={id} />)}
+											onClick={() => open(<AppOrderDetail orderId={id}  type={type} />)}
 											className='grid w-full grid-cols-3 gap-1 rounded-md bg-bcpayment-green-4 overflow-clip min-h-[80px]'
 										>
 											<div className='grid grid-cols-3 col-span-2 gap-1 border-r-2 border-bcpayment-green-3'>
@@ -94,7 +93,7 @@ const AppOrderListing = ({ type }: AppOrderListingProps) => {
 
 									return (
 										<div
-											onClick={() => open(<AppOrderDetail orderId={id} />)}
+											onClick={() => open(<AppOrderDetail orderId={id} type={type} />)}
 											className='grid w-full grid-cols-3 gap-1 rounded-md bg-bcpayment-green-4 overflow-clip min-h-[80px]'
 										>
 											<div className='grid grid-cols-3 col-span-2 gap-1 border-r-2 border-bcpayment-green-3'>

@@ -10,11 +10,12 @@ import AppAdItem from '../components/AppAdItem';
 import { RiHomeHeartLine, RiQrScan2Line } from 'react-icons/ri';
 import { IoMdWallet } from 'react-icons/io';
 import { useState } from 'react';
-import { QrReader } from 'react-qr-reader';
 import { useContractContext } from '../contexts/ContractContext';
 import { useAppSidebar } from '../contexts/AppSidebarContext';
 import { Link } from 'react-router-dom';
 import { useAppNoti } from '../contexts/AppNotiContext';
+import Html5QrCodePlugin from '../components/Html5QrCodePlugin';
+import { QrcodeSuccessCallback } from 'html5-qrcode';
 
 const HEADER_ITEMS = [
 	{
@@ -64,12 +65,21 @@ const SERVICE_ITEMS = [
 
 const Home = () => {
 	const [isScanning, setIsScanning] = useState(false);
-	const { accountBalance } = useContractContext();
+	const { accountBalance, buy } = useContractContext();
 	const { open } = useAppSidebar();
 	const { open: openNoti} = useAppNoti()
-	const handleScan = (result: any, error: any) => {
-		console.log('result', result);
-		console.log('error', error);
+	const handleScan: QrcodeSuccessCallback = async (decodedText) => {
+		console.log('decodedText', decodedText);
+		if(decodedText) {
+			const data = JSON.parse(decodedText)
+			const { contractAddress, amount, orderDecentralizedId } = data ?? {};
+			const buyResult = await buy({
+				amount,
+				contractAddress,
+				orderDecentralizedId
+			})
+			console.log("buyResult", buyResult);
+		}
 	};
 	// const { data, loading } = useUsersQuery({ fetchPolicy: 'no-cache' });
 
@@ -82,12 +92,13 @@ const Home = () => {
 				onClick={() => setIsScanning(false)}
 			/>
 			<div className='w-full mt-10'>
-				<QrReader
+				{/* <QrReader
 					scanDelay={300}
 					onResult={handleScan}
 					className='w-full h-[500px]'
 					constraints={{}}
-				/>
+				/> */}
+				<Html5QrCodePlugin onScanningSuccess={handleScan}/>
 			</div>
 		</div>
 	) : (

@@ -30,7 +30,9 @@ function App() {
 			<Routes>
 				<Route path='/'>
 					<Route index element={<ProtectedRoute><Home /></ProtectedRoute>} />
+					{/* <Route index element={<Home />} />  */}
 					<Route path='transfer-money' element={<ProtectedRoute><TransferMoney /></ProtectedRoute>} />
+					{/* <Route path='register-merchant' element={<Merchant />} /> */}
 					<Route path='register-merchant' element={<ProtectedRoute><Merchant /></ProtectedRoute>} />
 					<Route path='order-listing' element={<ProtectedRoute><OrderBuyListing /></ProtectedRoute>} />
 					<Route path='activity-history' element={<ProtectedRoute><ActivityHistory /></ProtectedRoute>} />

@@ -1,6 +1,6 @@
 export interface IBuyParams {
 	contractAddress: string;
-	amount: number;
+	amount: string;
 	orderDecentralizedId: string;
 }
 
@@ -20,8 +20,9 @@ export interface IContractContext {
 	connectWallet: () => void;
 	transferMoney: (params: ITransferMoneyParams) => Promise<any>;
 	buy: (params: IBuyParams) => Promise<any>;
-	confirmShipping: () => Promise<void>;
-	ship: () => Promise<void>;
+	buyerConfirmShipped: (params: ITimeoutParams) => Promise<void>;
+	sellerConfirmShipped: (params: ITimeoutParams) => Promise<void>;
+	ship: (params: ITimeoutParams) => Promise<void>;
 	timeout: (params: ITimeoutParams) => Promise<any>;
 	deployECommerceContract: (merchantAddress: string) => Promise<any>;
 }

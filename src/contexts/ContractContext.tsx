@@ -29,7 +29,8 @@ export const ContractContext = createContext<IContractContext>({
 	accountBalance: 0,
 	isConnectedWithRightChainAndRightAccount: false,
 	buy: () => Promise.resolve(),
-	confirmShipping: () => Promise.resolve(),
+	buyerConfirmShipped: () => Promise.resolve(),
+	sellerConfirmShipped: () => Promise.resolve(),
 	connectWallet: () => Promise.resolve(),
 	ship: () => Promise.resolve(),
 	timeout: () => Promise.resolve(),
@@ -116,9 +117,11 @@ const ContractContextProvider = ({ children }: { children: ReactNode }) => {
 		amount,
 		orderDecentralizedId,
 	}: IBuyParams) => {
+		console.log('amount', amount);
 		const contract = new Contract(contractAddress, IEcommerceShop, signer);
-		return contract.buy([orderDecentralizedId], {
-			value: amount
+		return contract.buy(BigNumber.from(orderDecentralizedId), {
+			value: utils.parseEther(amount),
+			gasLimit: 1_000_000,
 		});
 	};
 
@@ -127,7 +130,35 @@ const ContractContextProvider = ({ children }: { children: ReactNode }) => {
 		orderDecentralizedId,
 	}: ITimeoutParams) => {
 		const contract = new Contract(contractAddress, IEcommerceShop, signer);
-		return contract.timeout([orderDecentralizedId]);
+		return contract.timeout(BigNumber.from(orderDecentralizedId));
+	};
+
+	const ship = async ({
+		contractAddress,
+		orderDecentralizedId,
+	}: ITimeoutParams) => {
+		const contract = new Contract(contractAddress, IEcommerceShop, signer);
+		const nonce = await contract.getNonce();
+		return contract.ship([BigNumber.from(orderDecentralizedId), nonce]);
+	};
+
+	const buyerConfirmShipped = async ({
+		contractAddress,
+		orderDecentralizedId,
+	}: ITimeoutParams) => {
+		console.log('contractAddress', contractAddress)
+		const contract = new Contract(contractAddress, IEcommerceShop, signer);
+		return contract.buyerConfirm(BigNumber.from(orderDecentralizedId));
+	};
+
+	const sellerConfirmShipped = async ({
+		contractAddress,
+		orderDecentralizedId,
+	}: ITimeoutParams) => {
+		const contract = new Contract(contractAddress, IEcommerceShop, signer);
+		const nonce = await contract.getNonce();
+		console.log("orderDecentralizedId", orderDecentralizedId, "nonce", nonce)
+		return contract.sellerConfirm(BigNumber.from(orderDecentralizedId), nonce);
 	};
 
 	const transferMoney = async ({ receiver, value }: ITransferMoneyParams) => {
@@ -165,9 +196,10 @@ const ContractContextProvider = ({ children }: { children: ReactNode }) => {
 				isConnectedWithRightChainAndRightAccount,
 				deployECommerceContract,
 				buy,
-				confirmShipping: () => Promise.resolve(),
+				buyerConfirmShipped,
+				sellerConfirmShipped,
 				connectWallet,
-				ship: () => Promise.resolve(),
+				ship,
 				timeout,
 				transferMoney,
 			}}

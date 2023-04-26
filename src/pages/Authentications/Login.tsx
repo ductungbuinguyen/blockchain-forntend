@@ -23,9 +23,11 @@ const Login = () => {
 				<Formik
 					initialValues={{ email: '', password: '' }}
 					onSubmit={async ({email, password}) => {
+						console.log('login', login);
 						const response = await login({
 							variables: { loginInput: { email, password } },
-						});
+						}).catch(err => console.log("err", err));
+						console.log("response", response);
 						if (response?.data?.login?.success) {
 							JWTManager.setToken(response.data.login.accessToken as string);
 							setIsAuthenticated(true);

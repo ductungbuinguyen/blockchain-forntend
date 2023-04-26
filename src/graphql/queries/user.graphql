@@ -16,6 +16,8 @@ query user {
         price
         shipDeadline
         confirmDeadline
+        isBuyerConfirm
+        isSellerConfirm
         buyer {
           id
           email
@@ -67,6 +69,8 @@ query user {
       price
       shipDeadline
       confirmDeadline
+      isBuyerConfirm
+      isSellerConfirm
       contract {
         id
         address

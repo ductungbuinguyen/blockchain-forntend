@@ -45,9 +45,9 @@ const AppNotiContextProvider = ({ children }: { children: ReactNode }) => {
         transform: "translate(-50%, -100%)",
         top: 0,
         transition: "opacity 300ms,transform 500ms"
-      }} className="absolute flex justify-center gap-2 p-4 -translate-x-1/2 bg-white left-1/2 w-[80%] rounded-md">
+      }} className="absolute flex gap-2 p-4 -translate-x-1/2 bg-white left-1/2 w-[80%] rounded-md z-10">
         <div><BsFillExclamationCircleFill className="bg-white text-bcpayment-green-1 text-[25px]"/></div>
-        <div>
+        <div className="grow">
           <div className="flex items-center justify-between w-full">
           <p className="font-semibold">{title}</p>
           <AiOutlineClose className="cursor-pointer text-bcpayment-gray-1" onClick={() => setIsShowNoti(false)}/>
