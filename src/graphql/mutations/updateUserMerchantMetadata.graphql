@@ -1,0 +1,16 @@
+mutation UpdateUserMerchantMetadata($updateUserMerchantMetadataInput: UpdateUserMerchantMetadataInput) {
+  updateUserMerchantMetadata(updateUserMerchantMetadataInput: $updateUserMerchantMetadataInput) {
+    code
+    success
+    message
+    merchantMetaData {
+      id
+      companyName
+      companyIdentify
+      businessField
+      websiteUrl
+      storeLocation
+      note
+    }
+  }
+}

@@ -3,8 +3,8 @@ import { BsFillExclamationCircleFill } from 'react-icons/bs'
 import { AiOutlineClose } from 'react-icons/ai'
 
 interface IOpenNotiParams {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
 interface IAppNotiContext {
@@ -19,8 +19,8 @@ export const useAppNoti = () => useContext(AppNotiContext)
 
 const AppNotiContextProvider = ({ children }: { children: ReactNode }) => {
   const [isShowNoti, setIsShowNoti] = useState(false)
-  const [title, setTitle] = useState("title")
-  const [description, setDescription] = useState("description")
+  const [title, setTitle] = useState<string | undefined>("title")
+  const [description, setDescription] = useState<string | undefined>("description")
 
   const open = ({
     description,

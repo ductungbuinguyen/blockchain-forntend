@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Gender, useRegisterMutation } from '../../generated/graphql';
+import { useRegisterMutation } from '../../generated/graphql';
 import { SlArrowLeft } from 'react-icons/sl';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { Formik, Form } from 'formik';
@@ -7,24 +7,10 @@ import AppButtonPrimary from '../../components/AppButtonPrimary';
 import AuthInputItem from '../../components/FormItem/AuthInputItem';
 import AuthPasswordItem from '../../components/FormItem/AuthPasswordItem';
 import { fieldValidator, IValidateType } from '../../utils/formikValidator';
-import AuthSelectItem, { AuthSelectItemProps } from '../../components/FormItem/AuthSelectItem';
+import AuthSelectItem from '../../components/FormItem/AuthSelectItem';
 import AuthFileUpload from '../../components/AuthFileUpload';
 import { useState } from 'react';
-
-const GENDER_OPTIONS: AuthSelectItemProps["options"] = [
-	{
-		name: 'Nam',
-		value: Gender.Male,
-	},
-	{
-		name: 'Nữ',
-		value: Gender.Female,
-	},
-	{
-		name: 'Khác',
-		value: Gender.Other,
-	},
-]
+import { GENDER_OPTIONS } from '../../assets/constants';
 
 const Register = () => {
 	const navigate = useNavigate();

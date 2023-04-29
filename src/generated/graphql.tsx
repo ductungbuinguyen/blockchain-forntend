@@ -132,6 +132,14 @@ export type MerchantMetaData = {
   websiteUrl?: Maybe<Scalars['String']>;
 };
 
+export type MerchantMetadataMutationResponse = IMutationResponse & {
+  __typename?: 'MerchantMetadataMutationResponse';
+  code?: Maybe<Scalars['Float']>;
+  merchantMetaData?: Maybe<MerchantMetaData>;
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
 export type MerchantMutationResponse = IMutationResponse & {
   __typename?: 'MerchantMutationResponse';
   code?: Maybe<Scalars['Float']>;
@@ -148,6 +156,9 @@ export type Mutation = {
   logout?: Maybe<UserMutationResponse>;
   register?: Maybe<UserMutationResponse>;
   registerMerchant?: Maybe<MerchantMutationResponse>;
+  updatePassword?: Maybe<MutationResponse>;
+  updateUserInfo?: Maybe<UserInfoMetaDataMutationResponse>;
+  updateUserMerchantMetadata?: Maybe<MerchantMetadataMutationResponse>;
 };
 
 
@@ -166,11 +177,6 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationLogoutArgs = {
-  userId?: InputMaybe<Scalars['ID']>;
-};
-
-
 export type MutationRegisterArgs = {
   registerInput?: InputMaybe<RegisterInput>;
 };
@@ -178,6 +184,28 @@ export type MutationRegisterArgs = {
 
 export type MutationRegisterMerchantArgs = {
   registerMerchantInput?: InputMaybe<RegisterMerchantInput>;
+};
+
+
+export type MutationUpdatePasswordArgs = {
+  updatePasswordInput?: InputMaybe<UpdatePasswordInput>;
+};
+
+
+export type MutationUpdateUserInfoArgs = {
+  updateUserInfoInput?: InputMaybe<UpdateUserInfoInput>;
+};
+
+
+export type MutationUpdateUserMerchantMetadataArgs = {
+  updateUserMerchantMetadataInput?: InputMaybe<UpdateUserMerchantMetadataInput>;
+};
+
+export type MutationResponse = IMutationResponse & {
+  __typename?: 'MutationResponse';
+  code?: Maybe<Scalars['Float']>;
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
 };
 
 export type Order = {
@@ -244,6 +272,30 @@ export type Subscription = {
   activityHistory?: Maybe<ActivityHistory>;
 };
 
+export type UpdatePasswordInput = {
+  newPassword?: InputMaybe<Scalars['String']>;
+  oldPassword?: InputMaybe<Scalars['String']>;
+  reEnterNewPassword?: InputMaybe<Scalars['String']>;
+};
+
+export type UpdateUserInfoInput = {
+  base64Avatar?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  fullName?: InputMaybe<Scalars['String']>;
+  gender?: InputMaybe<Gender>;
+  identityCode?: InputMaybe<Scalars['String']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+};
+
+export type UpdateUserMerchantMetadataInput = {
+  businessField?: InputMaybe<Scalars['String']>;
+  companyIdentify?: InputMaybe<Scalars['String']>;
+  companyName?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  storeLocation?: InputMaybe<Scalars['String']>;
+  websiteUrl?: InputMaybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   activityHistoriesAsReceiver?: Maybe<Array<Maybe<ActivityHistory>>>;
@@ -278,6 +330,15 @@ export type UserInfoMetaData = {
   phoneNumber?: Maybe<Scalars['String']>;
 };
 
+export type UserInfoMetaDataMutationResponse = IMutationResponse & {
+  __typename?: 'UserInfoMetaDataMutationResponse';
+  accessToken?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['Float']>;
+  message?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+  user?: Maybe<UserInfoMetaData>;
+};
+
 export type UserMutationResponse = IMutationResponse & {
   __typename?: 'UserMutationResponse';
   accessToken?: Maybe<Scalars['String']>;
@@ -301,9 +362,7 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'UserMutationResponse', code?: number | null, success?: boolean | null, message?: string | null, accessToken?: string | null } | null };
 
-export type LogoutMutationVariables = Exact<{
-  userId: Scalars['ID'];
-}>;
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutMutation = { __typename?: 'Mutation', logout?: { __typename?: 'UserMutationResponse', code?: number | null, success?: boolean | null } | null };
@@ -322,6 +381,27 @@ export type RegisterMerchantMutationVariables = Exact<{
 
 export type RegisterMerchantMutation = { __typename?: 'Mutation', registerMerchant?: { __typename?: 'MerchantMutationResponse', code?: number | null, success?: boolean | null, merchantMetaData?: { __typename: 'MerchantMetaData', id?: string | null, companyName?: string | null, companyIdentify?: string | null, businessField?: string | null, websiteUrl?: string | null, storeLocation?: string | null, note?: string | null, merchantSecretKey?: string | null } | null } | null };
 
+export type UpdatePasswordMutationVariables = Exact<{
+  updatePasswordInput: UpdatePasswordInput;
+}>;
+
+
+export type UpdatePasswordMutation = { __typename?: 'Mutation', updatePassword?: { __typename?: 'MutationResponse', code?: number | null, success?: boolean | null, message?: string | null } | null };
+
+export type UpdateUserInfoMutationVariables = Exact<{
+  updateUserInfoInput?: InputMaybe<UpdateUserInfoInput>;
+}>;
+
+
+export type UpdateUserInfoMutation = { __typename?: 'Mutation', updateUserInfo?: { __typename?: 'UserInfoMetaDataMutationResponse', code?: number | null, success?: boolean | null, message?: string | null, user?: { __typename?: 'UserInfoMetaData', email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, base64Avatar?: string | null } | null } | null };
+
+export type UpdateUserMerchantMetadataMutationVariables = Exact<{
+  updateUserMerchantMetadataInput?: InputMaybe<UpdateUserMerchantMetadataInput>;
+}>;
+
+
+export type UpdateUserMerchantMetadataMutation = { __typename?: 'Mutation', updateUserMerchantMetadata?: { __typename?: 'MerchantMetadataMutationResponse', code?: number | null, success?: boolean | null, message?: string | null, merchantMetaData?: { __typename?: 'MerchantMetaData', id?: string | null, companyName?: string | null, companyIdentify?: string | null, businessField?: string | null, websiteUrl?: string | null, storeLocation?: string | null, note?: string | null } | null } | null };
+
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -330,7 +410,7 @@ export type UserQuery = { __typename?: 'Query', user?: { __typename: 'UserInfoMe
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, metaMaskPublicKey?: string | null, contract?: { __typename?: 'Contract', id?: string | null, address?: string | null, seller?: { __typename?: 'User', id?: string | null } | null } | null, merchantMetaData?: { __typename?: 'MerchantMetaData', id?: string | null, companyName?: string | null, companyIdentify?: string | null, businessField?: string | null, websiteUrl?: string | null, storeLocation?: string | null, note?: string | null, merchantSecretKey?: string | null } | null, ordersAsBuyer?: Array<{ __typename?: 'Order', id?: string | null, decentralizedId?: string | null, price?: string | null } | null> | null } | null> | null };
+export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id?: string | null, email?: string | null, gender?: Gender | null, fullName?: string | null, phoneNumber?: string | null, identityCode?: string | null, base64Avatar?: string | null, metaMaskPublicKey?: string | null, contract?: { __typename?: 'Contract', id?: string | null, address?: string | null, seller?: { __typename?: 'User', id?: string | null } | null } | null, merchantMetaData?: { __typename?: 'MerchantMetaData', id?: string | null, companyName?: string | null, companyIdentify?: string | null, businessField?: string | null, websiteUrl?: string | null, storeLocation?: string | null, note?: string | null, merchantSecretKey?: string | null } | null, ordersAsBuyer?: Array<{ __typename?: 'Order', id?: string | null, decentralizedId?: string | null, price?: string | null } | null> | null } | null> | null };
 
 export type ActivityHistorySubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -441,8 +521,8 @@ export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const LogoutDocument = gql`
-    mutation Logout($userId: ID!) {
-  logout(userId: $userId) {
+    mutation Logout {
+  logout {
     code
     success
   }
@@ -463,7 +543,6 @@ export type LogoutMutationFn = Apollo.MutationFunction<LogoutMutation, LogoutMut
  * @example
  * const [logoutMutation, { data, loading, error }] = useLogoutMutation({
  *   variables: {
- *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -553,6 +632,130 @@ export function useRegisterMerchantMutation(baseOptions?: Apollo.MutationHookOpt
 export type RegisterMerchantMutationHookResult = ReturnType<typeof useRegisterMerchantMutation>;
 export type RegisterMerchantMutationResult = Apollo.MutationResult<RegisterMerchantMutation>;
 export type RegisterMerchantMutationOptions = Apollo.BaseMutationOptions<RegisterMerchantMutation, RegisterMerchantMutationVariables>;
+export const UpdatePasswordDocument = gql`
+    mutation UpdatePassword($updatePasswordInput: UpdatePasswordInput!) {
+  updatePassword(updatePasswordInput: $updatePasswordInput) {
+    code
+    success
+    message
+  }
+}
+    `;
+export type UpdatePasswordMutationFn = Apollo.MutationFunction<UpdatePasswordMutation, UpdatePasswordMutationVariables>;
+
+/**
+ * __useUpdatePasswordMutation__
+ *
+ * To run a mutation, you first call `useUpdatePasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePasswordMutation, { data, loading, error }] = useUpdatePasswordMutation({
+ *   variables: {
+ *      updatePasswordInput: // value for 'updatePasswordInput'
+ *   },
+ * });
+ */
+export function useUpdatePasswordMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePasswordMutation, UpdatePasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePasswordMutation, UpdatePasswordMutationVariables>(UpdatePasswordDocument, options);
+      }
+export type UpdatePasswordMutationHookResult = ReturnType<typeof useUpdatePasswordMutation>;
+export type UpdatePasswordMutationResult = Apollo.MutationResult<UpdatePasswordMutation>;
+export type UpdatePasswordMutationOptions = Apollo.BaseMutationOptions<UpdatePasswordMutation, UpdatePasswordMutationVariables>;
+export const UpdateUserInfoDocument = gql`
+    mutation UpdateUserInfo($updateUserInfoInput: UpdateUserInfoInput) {
+  updateUserInfo(updateUserInfoInput: $updateUserInfoInput) {
+    code
+    success
+    message
+    user {
+      email
+      gender
+      fullName
+      phoneNumber
+      identityCode
+      base64Avatar
+    }
+  }
+}
+    `;
+export type UpdateUserInfoMutationFn = Apollo.MutationFunction<UpdateUserInfoMutation, UpdateUserInfoMutationVariables>;
+
+/**
+ * __useUpdateUserInfoMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserInfoMutation, { data, loading, error }] = useUpdateUserInfoMutation({
+ *   variables: {
+ *      updateUserInfoInput: // value for 'updateUserInfoInput'
+ *   },
+ * });
+ */
+export function useUpdateUserInfoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserInfoMutation, UpdateUserInfoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserInfoMutation, UpdateUserInfoMutationVariables>(UpdateUserInfoDocument, options);
+      }
+export type UpdateUserInfoMutationHookResult = ReturnType<typeof useUpdateUserInfoMutation>;
+export type UpdateUserInfoMutationResult = Apollo.MutationResult<UpdateUserInfoMutation>;
+export type UpdateUserInfoMutationOptions = Apollo.BaseMutationOptions<UpdateUserInfoMutation, UpdateUserInfoMutationVariables>;
+export const UpdateUserMerchantMetadataDocument = gql`
+    mutation UpdateUserMerchantMetadata($updateUserMerchantMetadataInput: UpdateUserMerchantMetadataInput) {
+  updateUserMerchantMetadata(
+    updateUserMerchantMetadataInput: $updateUserMerchantMetadataInput
+  ) {
+    code
+    success
+    message
+    merchantMetaData {
+      id
+      companyName
+      companyIdentify
+      businessField
+      websiteUrl
+      storeLocation
+      note
+    }
+  }
+}
+    `;
+export type UpdateUserMerchantMetadataMutationFn = Apollo.MutationFunction<UpdateUserMerchantMetadataMutation, UpdateUserMerchantMetadataMutationVariables>;
+
+/**
+ * __useUpdateUserMerchantMetadataMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMerchantMetadataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMerchantMetadataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMerchantMetadataMutation, { data, loading, error }] = useUpdateUserMerchantMetadataMutation({
+ *   variables: {
+ *      updateUserMerchantMetadataInput: // value for 'updateUserMerchantMetadataInput'
+ *   },
+ * });
+ */
+export function useUpdateUserMerchantMetadataMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMerchantMetadataMutation, UpdateUserMerchantMetadataMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserMerchantMetadataMutation, UpdateUserMerchantMetadataMutationVariables>(UpdateUserMerchantMetadataDocument, options);
+      }
+export type UpdateUserMerchantMetadataMutationHookResult = ReturnType<typeof useUpdateUserMerchantMetadataMutation>;
+export type UpdateUserMerchantMetadataMutationResult = Apollo.MutationResult<UpdateUserMerchantMetadataMutation>;
+export type UpdateUserMerchantMetadataMutationOptions = Apollo.BaseMutationOptions<UpdateUserMerchantMetadataMutation, UpdateUserMerchantMetadataMutationVariables>;
 export const UserDocument = gql`
     query user {
   user {
@@ -747,6 +950,7 @@ export const UsersDocument = gql`
     fullName
     phoneNumber
     identityCode
+    base64Avatar
     metaMaskPublicKey
     contract {
       id

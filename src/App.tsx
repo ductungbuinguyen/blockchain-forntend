@@ -10,6 +10,7 @@ import TransferMoney from './pages/TransferMoney';
 import Merchant from './pages/Merchant';
 import OrderBuyListing from './pages/OrderBuyListing';
 import ActivityHistory from './pages/ActivityHistory';
+import UserInfo from './pages/UserInfo';
 
 function App() {
 	const [loading, setLoading] = useState(true);
@@ -33,7 +34,8 @@ function App() {
 					{/* <Route index element={<Home />} />  */}
 					<Route path='transfer-money' element={<ProtectedRoute><TransferMoney /></ProtectedRoute>} />
 					{/* <Route path='register-merchant' element={<Merchant />} /> */}
-					<Route path='register-merchant' element={<ProtectedRoute><Merchant /></ProtectedRoute>} />
+					<Route path='merchant' element={<ProtectedRoute><Merchant /></ProtectedRoute>} />
+					<Route path='user-info' element={<ProtectedRoute><UserInfo /></ProtectedRoute>} />
 					<Route path='order-listing' element={<ProtectedRoute><OrderBuyListing /></ProtectedRoute>} />
 					<Route path='activity-history' element={<ProtectedRoute><ActivityHistory /></ProtectedRoute>} />
 					<Route path='connect-wallet' element={<ConnectWallet/>}/>

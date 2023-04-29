@@ -21,13 +21,13 @@ const TransferToWalletInputData = ({
 	const { data } = useUsersQuery();
 	const user = data?.users?.find((user) => user?.id === userId);
 	if (user) {
-		const { fullName, metaMaskPublicKey } = user;
+		const { fullName, metaMaskPublicKey, base64Avatar } = user;
 		return (
 			<div className='relative w-full h-screen bg-bcpayment-green-4'>
 				<AppHeaderWrapper bottomOffset={0}>
 					<div className='relative flex flex-col items-center px-6 pt-6 text-white'>
 						<div className='rounded-full overflow-clip w-[170px] h-[170px]'>
-							<img src='/avatar.jpg' />
+							<img src={base64Avatar ?? '/AvatarPlaceholder.svg'} />
 						</div>
 						<p className='font-bold text-[27px] text-center'>{fullName}</p>
 						<p className='text-[20px] font-medium break-words text-center max-w-[294px]'>

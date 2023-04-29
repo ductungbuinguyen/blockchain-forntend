@@ -18,10 +18,11 @@ const TransferToWalletSelectReceiverStep = ({
 	const { data: users, loading } = useUsersQuery();
 	const { data } = useUserQuery();
 	const { id } = data?.user ?? {}
+	console.log('id', id)
 	const ortherUsers = users?.users
 		? users.users.filter((user) => {
       const isMatchSearchValue = searchValue ? user?.email?.toLowerCase()?.includes(searchValue?.toLowerCase()) || user?.phoneNumber?.toLowerCase()?.includes(searchValue?.toLowerCase()) : true
-      return isMatchSearchValue && user?.id !== id
+      return isMatchSearchValue && user?.id?.toString() !== id?.toString()
     })
 		: [];
 	if (loading) return <h1>Loading...</h1>;
@@ -35,7 +36,7 @@ const TransferToWalletSelectReceiverStep = ({
 					/>
 				</div>
 			</AppHeaderWrapper>
-			<div className='relative w-full px-[20px] h-full'>
+			<div className='relative w-full px-[20px] h-[88%] overflow-y-scroll'>
 			<div className='pt-8 bg-white rounded-t-xl px-[15px] shadow w-full h-full'>
 					<input
 						className='bg-bcpayment-green-3 w-full py-1 px-3 text-white rounded-[15px] placeholder:text-white focus-visible:outline-none placeholder:text-center text-center'
@@ -46,50 +47,14 @@ const TransferToWalletSelectReceiverStep = ({
 							onSearchValueChange(event.target.value);
 						}}
 					/>
-					<div className='flex flex-col h-full gap-6 pt-8 mb-8 overflow-x-visible overflow-y-scroll'>
+					<div className='flex flex-col gap-6 pt-8 mb-8 overflow-y-scroll h-[95%]'>
 						{ortherUsers.map((user) => {
-							const { id, phoneNumber, email, fullName } =
+							const { id, phoneNumber, email, fullName, base64Avatar } =
 								user ?? {};
 							return (
 								<div className='flex items-center gap-2 cursor-pointer' onClick={() => onSelectDestination(id)}>
 									<div className='rounded-full overflow-clip min-w-[50px] max-w-[50px] min-h-[50px] max-h-[50px]'>
-										<img src='/avatar.jpg' />
-									</div>
-									<div className='flex flex-col max-w-[265px]'>
-										<p className='font-bold text-black text-[15px]'>
-											{fullName}
-										</p>
-                    <p className='text-[15px] font-medium text-bcpayment-green-3 break-words'>{email}</p>
-                    <p className='text-[15px] font-medium text-bcpayment-green-3 break-words'>{phoneNumber}</p>
-									</div>
-								</div>
-							);
-						})}
-						{ortherUsers.map((user) => {
-							const { id, phoneNumber, email, fullName } =
-								user ?? {};
-							return (
-								<div className='flex items-center gap-2 cursor-pointer' onClick={() => onSelectDestination(id)}>
-									<div className='rounded-full overflow-clip min-w-[50px] max-w-[50px] min-h-[50px] max-h-[50px]'>
-										<img src='/avatar.jpg' />
-									</div>
-									<div className='flex flex-col max-w-[265px]'>
-										<p className='font-bold text-black text-[15px]'>
-											{fullName}
-										</p>
-                    <p className='text-[15px] font-medium text-bcpayment-green-3 break-words'>{email}</p>
-                    <p className='text-[15px] font-medium text-bcpayment-green-3 break-words'>{phoneNumber}</p>
-									</div>
-								</div>
-							);
-						})}
-						{ortherUsers.map((user) => {
-							const { id, phoneNumber, email, fullName } =
-								user ?? {};
-							return (
-								<div className='flex items-center gap-2 cursor-pointer' onClick={() => onSelectDestination(id)}>
-									<div className='rounded-full overflow-clip min-w-[50px] max-w-[50px] min-h-[50px] max-h-[50px]'>
-										<img src='/avatar.jpg' />
+										<img src={base64Avatar ?? '/AvatarPlaceholder.svg'} />
 									</div>
 									<div className='flex flex-col max-w-[265px]'>
 										<p className='font-bold text-black text-[15px]'>

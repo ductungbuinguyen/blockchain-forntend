@@ -45,7 +45,7 @@ const AppOrderListing = ({ type }: AppOrderListingProps) => {
 					<p className='font-bold text-[24px]'>{`Đơn hàng ${type === 'buy' ? 'mua' : 'bán'}`}</p>
 				</div>
 			</AppHeaderWrapper>
-			<div className='relative w-full px-[20px] h-full'>
+			<div className='relative w-full px-[20px] h-[85%]'>
 				<div className='pt-8 bg-white rounded-t-xl px-[15px] shadow w-full h-full'>
 					<input
 						className='bg-bcpayment-green-3 w-full py-1 px-3 text-white rounded-[15px] placeholder:text-white focus-visible:outline-none placeholder:text-center text-center'
@@ -56,7 +56,7 @@ const AppOrderListing = ({ type }: AppOrderListingProps) => {
 							setSearchValue(event.target.value);
 						}}
 					/>
-					<div className='flex flex-col h-full gap-6 pt-8 mb-8 overflow-x-visible overflow-y-scroll max-h-[650px]'>
+					<div className='flex flex-col gap-6 pt-8 mb-8 overflow-x-visible overflow-y-scroll h-[90%]'>
 						{type === 'buy'
 							? filteredOrdersAsBuyer.map((order) => {
 									const { price, contract, creationTime, name, id } =
@@ -69,7 +69,7 @@ const AppOrderListing = ({ type }: AppOrderListingProps) => {
 										>
 											<div className='grid grid-cols-3 col-span-2 gap-1 border-r-2 border-bcpayment-green-3'>
 												<div className='rounded-full overflow-clip w-[60px] h-[60px] self-center ml-2'>
-													<img src={base64Avatar || '/avatar.jpg'} />
+													<img src={base64Avatar || '/AvatarPlaceholder.svg'} />
 												</div>
 												<div className='flex flex-col justify-between h-full col-span-2 px-2 py-1 '>
 													<p className='text-black font-semibold text-[15px] truncate	'>
@@ -98,7 +98,7 @@ const AppOrderListing = ({ type }: AppOrderListingProps) => {
 										>
 											<div className='grid grid-cols-3 col-span-2 gap-1 border-r-2 border-bcpayment-green-3'>
 												<div className='rounded-full overflow-clip w-[60px] h-[60px] self-center ml-2'>
-													<img src={base64Avatar || '/avatar.jpg'} />
+													<img src={base64Avatar || '/AvatarPlaceholder.svg'} />
 												</div>
 												<div className='flex flex-col justify-between h-full col-span-2 px-2 py-1 '>
 													<p className='text-black font-semibold text-[15px] truncate	'>

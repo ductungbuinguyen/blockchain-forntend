@@ -5,7 +5,7 @@ import { MdInput, MdOutlineOutput } from 'react-icons/md';
 import { TbArrowsRightLeft } from 'react-icons/tb';
 import { HiQrcode } from 'react-icons/hi';
 import AppButtonPrimary from '../components/AppButtonPrimary';
-import { useUserQuery } from '../generated/graphql';
+import { useLogoutMutation, useUserQuery } from '../generated/graphql';
 
 const SIDEBAR_ACTIONS = [
 	{
@@ -38,8 +38,9 @@ export const useAppSidebar = () => useContext(AppSidebarContext);
 const AppSidebarContextProvider = ({ children }: { children: ReactNode }) => {
 	const [isShowSidebar, setIsShowSidebar] = useState(false);
 	const { data } = useUserQuery();
-	const { fullName, email, phoneNumber } = data?.user ?? {}
+	const { fullName, email, phoneNumber, base64Avatar } = data?.user ?? {}
   const { logoutClient } = useAuthContext();
+	const [ logout ] = useLogoutMutation()
 
 	const open = () => {
 		setIsShowSidebar(true);
@@ -67,14 +68,14 @@ const AppSidebarContextProvider = ({ children }: { children: ReactNode }) => {
 				></div>
 				<div style={{
           transform: isShowSidebar ? 'translateX(0)' : 'translateX(-100%)'
-        }} className='w-[80%] bg-gradient-to-b from-bcpayment-green-2 to-bcpayment-green-1 min-h-full z-10 relative px-[32px] pt-[60px] pb-[20px] text-white transition-transform duration-500'>
+        }} className='w-[80%] bg-gradient-to-b from-bcpayment-green-2 to-bcpayment-green-1 z-10 h-full relative px-[32px] pt-[60px] pb-[20px] text-white transition-transform duration-500'>
 					<div className='flex items-center gap-8'>
 						<AiOutlineClose className='text-[32px] font-bold' onClick={() => setIsShowSidebar(false)} />
 						<p className='font-bold text-[32px]'>Tuỳ chọn</p>
 					</div>
 					<div className='flex items-center gap-2 mt-8'>
 						<div className='rounded-full overflow-clip w-[60px] h-[60px]'>
-							<img src='/avatar.jpg' />
+							<img src={base64Avatar ?? '/AvatarPlaceholder.svg'} />
 						</div>
 						<div className='flex flex-col'>
 							<p className='text-[24px] font-bold'>{fullName}</p>
@@ -93,9 +94,10 @@ const AppSidebarContextProvider = ({ children }: { children: ReactNode }) => {
 						))}
 					</div>
 					<AppButtonPrimary onClick={() => {
+						logout()
             logoutClient();
             setIsShowSidebar(false);
-            }} className='!from-white !to-white !text-bcpayment-green-1 mt-[170px]'>
+            }} className='!from-white !to-white !text-bcpayment-green-1 mt-20'>
 						ĐĂNG XUẤT
 					</AppButtonPrimary>
 				</div>

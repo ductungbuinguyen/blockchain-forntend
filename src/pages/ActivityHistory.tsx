@@ -16,10 +16,10 @@ const ActivityHistory = () => {
 						className='text-[20px] absolute left-0 top-1/2 -translate-y-1/2'
 						onClick={() => navigate('/')}
 					/>
-					<p className='font-bold text-[24px]'>Đơn hàng</p>
+					<p className='font-bold text-[24px]'>Lịch sử hoạt động</p>
 				</div>
 			</AppHeaderWrapper>
-      <div className='relative w-full px-[20px] h-full'>
+      <div className='relative w-full px-[20px] h-[85%]'>
 				<div className='bg-white rounded-t-xl px-[15px] shadow w-full h-full'>
 					<div className='flex flex-col h-full gap-6 pt-8 mb-8 overflow-x-visible overflow-y-scroll max-h-[680px]'>
             {activityHistories.map(({timeString, activities}) => (

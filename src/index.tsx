@@ -6,6 +6,7 @@ import {
 	ApolloLink,
 	ApolloProvider,
 	createHttpLink,
+	defaultDataIdFromObject,
 	InMemoryCache,
 	Operation,
 	split,
@@ -65,14 +66,20 @@ const authLink = new ApolloLink((operation, forward) => {
 			authorization: accessToken,
 		}
 	});
-	console.log('operation', operation);
 	(operation as Operation & { authToken: string | undefined }).authToken = accessToken
 	return (forward as any)(operation);
 })
 
 const client = new ApolloClient({
 	link: authLink.concat(splitLink),
-	cache: new InMemoryCache(),
+	cache: new InMemoryCache({
+		dataIdFromObject(responseObject) {
+			switch (responseObject.__typename) {
+				case 'UserInfoMetaData': return "UserInfoMetaData";
+				default: return defaultDataIdFromObject(responseObject);
+			}
+		}	
+	}),
 });
 
 ReactDOM.render(

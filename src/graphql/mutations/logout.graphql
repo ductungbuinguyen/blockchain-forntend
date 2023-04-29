@@ -1,5 +1,5 @@
-mutation Logout($userId: ID!) {
-	logout(userId: $userId) {
+mutation Logout {
+	logout {
 		code
 		success
 	}

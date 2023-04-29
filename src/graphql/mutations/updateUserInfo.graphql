@@ -1,0 +1,15 @@
+mutation UpdateUserInfo($updateUserInfoInput: UpdateUserInfoInput) {
+  updateUserInfo(updateUserInfoInput: $updateUserInfoInput) {
+    code
+    success
+    message
+    user {
+      email
+      gender
+      fullName
+      phoneNumber
+      identityCode
+      base64Avatar
+    }
+  }
+}

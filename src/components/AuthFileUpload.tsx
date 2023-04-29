@@ -3,11 +3,27 @@ import { useRef } from 'react';
 import { TbCameraPlus } from 'react-icons/tb';
 import { FieldAttributes } from '../interfaces/transferMoney';
 
+const convertBase64 = (file: File): Promise<string> => {
+	return new Promise((resolve, reject) => {
+			const fileReader = new FileReader();
+			fileReader.readAsDataURL(file);
+
+			fileReader.onload = () => {
+					resolve(fileReader.result as string);
+			};
+
+			fileReader.onerror = (error) => {
+					reject(error);
+			};
+	});
+};
+
+
 const AuthFileUpload = (props: FieldAttributes<File | string | undefined>) => {
 	const [field, meta, helper] = useField(props);
 	const value = meta.value;
+	console.log('value', value)
 	const inputFile = useRef<any>(null);
-	console.log('value', value);
 	return (
 		<div className='flex items-center justify-center flex-col'>
 			<input
@@ -17,14 +33,18 @@ const AuthFileUpload = (props: FieldAttributes<File | string | undefined>) => {
 				type='file'
 				accept='image/*'
 				value={null}
-				onChange={(event) => {
-					helper.setValue(event.currentTarget.files?.[0]);
+				onChange={async (event) => {
+					const file = event.currentTarget.files?.[0]
+					if(!file) return;
+					const base64Image = await convertBase64(file)
+					helper.setValue(base64Image);
 				}}
 				className='hidden'
 			/>
 			<div className='relative'>
 				<div className='rounded-full overflow-clip w-[140px] h-[140px] border'>
 					<img
+						className='object-contain w-[140px] h-[140px]'
 						src={
 							!value
 								? '/AvatarPlaceholder.svg'

@@ -50,7 +50,7 @@ const Merchant = () => {
 						<MdStore />
 					</span>
 					<p className='font-bold text-[2 0px] text-center'>
-						Chuyển tiền qua địa chỉ
+						Đăng kí làm nhà bán hàng
 					</p>
 					<SlArrowLeft
 						className='text-[20px] absolute left-0 top-[24px]'

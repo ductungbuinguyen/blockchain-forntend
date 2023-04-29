@@ -49,7 +49,9 @@ const TransferMoney = () => {
 		return stepHistory[stepHistory.length - 1];
 	}, [stepHistory]);
 	const onBackButtonClick = () => {
-		setStepHistory((prev) => prev.splice(-1));
+		setStepHistory((prev) => {
+			return prev.slice(0, prev.length - 1)
+		});
 	};
 	const { userId, amount, note, searchValue, transactionHash, address } =
 		currentStepData ?? {};

@@ -1,44 +1,42 @@
 import AppHeaderWrapper from '../components/AppHeaderWrapper';
 // import { useUsersQuery } from '../generated/graphql';
-import { MdInput, MdOutlineOutput, MdStore } from 'react-icons/md';
+import { MdStore } from 'react-icons/md';
 import { FaBars } from 'react-icons/fa';
 import { TbArrowsRightLeft } from 'react-icons/tb';
-import { HiQrcode } from 'react-icons/hi';
 import { SlArrowLeft } from 'react-icons/sl';
 import { BiMoneyWithdraw, BiHistory } from 'react-icons/bi';
 import AppAdItem from '../components/AppAdItem';
 import { RiHomeHeartLine, RiQrScan2Line } from 'react-icons/ri';
-import { IoMdWallet } from 'react-icons/io';
 import { useState } from 'react';
 import { useContractContext } from '../contexts/ContractContext';
 import { useAppSidebar } from '../contexts/AppSidebarContext';
 import { Link } from 'react-router-dom';
-import { useAppNoti } from '../contexts/AppNotiContext';
 import Html5QrCodePlugin from '../components/Html5QrCodePlugin';
 import { QrcodeSuccessCallback } from 'html5-qrcode';
+import { BsPersonFill } from 'react-icons/bs';
 
-const HEADER_ITEMS = [
-	{
-		icon: MdInput,
-		label: 'Nạp tiền',
-		url: '/',
-	},
-	{
-		icon: MdOutlineOutput,
-		label: 'Rút tiền',
-		url: '/',
-	},
-	{
-		icon: TbArrowsRightLeft,
-		label: 'chuyển tiền',
-		url: 'transfer-money',
-	},
-	{
-		icon: HiQrcode,
-		label: 'Mã qr',
-		url: '/',
-	},
-];
+// const HEADER_ITEMS = [
+// 	{
+// 		icon: MdInput,
+// 		label: 'Nạp tiền',
+// 		url: '/',
+// 	},
+// 	{
+// 		icon: MdOutlineOutput,
+// 		label: 'Rút tiền',
+// 		url: '/',
+// 	},
+// 	{
+// 		icon: TbArrowsRightLeft,
+// 		label: 'chuyển tiền',
+// 		url: 'transfer-money',
+// 	},
+// 	{
+// 		icon: HiQrcode,
+// 		label: 'Mã qr',
+// 		url: '/',
+// 	},
+// ];
 
 const SERVICE_ITEMS = [
 	{
@@ -49,17 +47,17 @@ const SERVICE_ITEMS = [
 	{
 		icon: BiMoneyWithdraw,
 		label: 'orders',
-		url: '/order-listing',
+		url: 'order-listing',
 	},
-	{
-		icon: MdInput,
-		label: 'Nạp tiền',
-		url: '/',
-	},
+	// {
+	// 	icon: MdInput,
+	// 	label: 'Nạp tiền',
+	// 	url: '/',
+	// },
 	{
 		icon: MdStore,
 		label: 'Nhà bán hàng',
-		url: '/register-merchant',
+		url: 'merchant',
 	},
 ];
 
@@ -67,7 +65,7 @@ const Home = () => {
 	const [isScanning, setIsScanning] = useState(false);
 	const { accountBalance, buy } = useContractContext();
 	const { open } = useAppSidebar();
-	const { open: openNoti} = useAppNoti()
+	// const { open: openNoti} = useAppNoti()
 	const handleScan: QrcodeSuccessCallback = async (decodedText) => {
 		console.log('decodedText', decodedText);
 		if(decodedText) {
@@ -110,7 +108,7 @@ const Home = () => {
 						onClick={open}
 					/>
 				</div>
-				<div className='flex justify-between w-full mt-5'>
+				{/* <div className='flex justify-between w-full mt-5'>
 					{HEADER_ITEMS.map(({ icon: Icon, label, url }, index) => (
 						<Link to={url} key={index} className='flex flex-col items-center gap-2'>
 								<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center w-[50px] h-[50px]'>
@@ -121,7 +119,7 @@ const Home = () => {
 								</p>
 						</Link>
 					))}
-				</div>
+				</div> */}
 			</AppHeaderWrapper>
 			<div className='bg-white mx-[24px] rounded-xl p-6 uppercase'>
 				<p className='font-bold text-bcpayment-orange text-[20px]'>
@@ -138,8 +136,8 @@ const Home = () => {
 				<div className='flex justify-between w-full'>
 					{SERVICE_ITEMS.map(({ icon: Icon, label, url }, index) => (
 						<Link to={url} key={index} className='flex flex-col items-center gap-2'>
-							<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center w-[50px] h-[50px]'>
-								<Icon className='text-[30px] text-bcpayment-green-1' />
+							<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center w-[70px] h-[70px]'>
+								<Icon className='text-[40px] text-bcpayment-green-1' />
 							</div>
 							<p className='text-[10px] font-semibold max-w-[50px] text-center'>
 								{label}
@@ -153,23 +151,23 @@ const Home = () => {
 					<AppAdItem key={value} />
 				))}
 			</div>
-			<button onClick={() => openNoti({
+			{/* <button onClick={() => openNoti({
 				description: "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
 				title: "simply dummy text of the"
-			})}>test</button>
+			})}>test</button> */}
 			<div className='bg-white flex justify-between px-[24px] py-2 absolute bottom-0 w-full'>
-				<div className='flex flex-col items-center text-center text-bcpayment-green-1'>
+				<Link to="/" className='flex flex-col items-center text-center text-bcpayment-green-1'>
 					<span className='text-[35px]'>
 						<RiHomeHeartLine />
 					</span>
 					<span className='font-extrabold text-[10px]'>Trang chính</span>
-				</div>
-				<div className='flex flex-col items-center text-bcpayment-green-1/60 max-w-[50px] text-center'>
+				</Link>
+				<Link to="user-info" className='flex flex-col items-center text-bcpayment-green-1/60 max-w-[50px] text-center'>
 					<span className='text-[35px]'>
-						<IoMdWallet />
+						<BsPersonFill />
 					</span>
-					<span className='font-extrabold text-[10px]'>Ví</span>
-				</div>
+					<span className='font-extrabold text-[10px]'>Cá nhân</span>
+				</Link>
 				<div className='w-[50px]'></div>
 				<span
 					className='text-[45px] p-2 rounded-xl text-white bg-gradient-to-b from-bcpayment-green-3/80 to-bcpayment-green-1 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/4'
@@ -177,12 +175,12 @@ const Home = () => {
 				>
 					<RiQrScan2Line />
 				</span>
-				<div className='flex flex-col items-center text-bcpayment-green-1/60 max-w-[5	0px] text-center'>
+				<Link to="merchant" className='flex flex-col items-center text-bcpayment-green-1/60 max-w-[5	0px] text-center'>
 					<span className='text-[35px]'>
 						<MdStore />
 					</span>
 					<span className='font-extrabold text-[10px]'>Nhà bán hàng</span>
-				</div>
+				</Link>
 				<Link to={'activity-history'} className='flex flex-col items-center text-bcpayment-green-1/60 max-w-[50px] text-center'>
 					<span className='text-[35px]'>
 						<BiHistory />
