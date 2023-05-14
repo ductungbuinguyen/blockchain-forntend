@@ -22,7 +22,6 @@ const convertBase64 = (file: File): Promise<string> => {
 const AuthFileUpload = (props: FieldAttributes<File | string | undefined>) => {
 	const [field, meta, helper] = useField(props);
 	const value = meta.value;
-	console.log('value', value)
 	const inputFile = useRef<any>(null);
 	return (
 		<div className='flex items-center justify-center flex-col'>

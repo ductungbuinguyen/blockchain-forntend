@@ -18,7 +18,6 @@ const TransferToWalletSelectReceiverStep = ({
 	const { data: users, loading } = useUsersQuery();
 	const { data } = useUserQuery();
 	const { id } = data?.user ?? {}
-	console.log('id', id)
 	const ortherUsers = users?.users
 		? users.users.filter((user) => {
       const isMatchSearchValue = searchValue ? user?.email?.toLowerCase()?.includes(searchValue?.toLowerCase()) || user?.phoneNumber?.toLowerCase()?.includes(searchValue?.toLowerCase()) : true
@@ -36,8 +35,8 @@ const TransferToWalletSelectReceiverStep = ({
 					/>
 				</div>
 			</AppHeaderWrapper>
-			<div className='relative w-full px-[20px] h-[88%] overflow-y-scroll'>
-			<div className='pt-8 bg-white rounded-t-xl px-[15px] shadow w-full h-full'>
+			<div className='relative w-full px-[20px] h-[calc(100%-95px)] overflow-y-scroll'>
+				<div className='pt-8 bg-white rounded-t-xl px-[15px] shadow w-full h-full'>
 					<input
 						className='bg-bcpayment-green-3 w-full py-1 px-3 text-white rounded-[15px] placeholder:text-white focus-visible:outline-none placeholder:text-center text-center'
 						placeholder='Nhập gmail hoặc số điện thoại'
@@ -47,7 +46,7 @@ const TransferToWalletSelectReceiverStep = ({
 							onSearchValueChange(event.target.value);
 						}}
 					/>
-					<div className='flex flex-col gap-6 pt-8 mb-8 overflow-y-scroll h-[95%]'>
+					<div className='flex flex-col gap-6 pt-8 mb-8 overflow-y-scroll max-h-[calc(100%-45px)]'>
 						{ortherUsers.map((user) => {
 							const { id, phoneNumber, email, fullName, base64Avatar } =
 								user ?? {};

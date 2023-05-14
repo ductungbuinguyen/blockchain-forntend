@@ -24,26 +24,24 @@ import { getMainDefinition } from '@apollo/client/utilities';
 
 
 const httpLink = createHttpLink({
-	uri: 'http://localhost:4000/graphql',
+	uri: process.env.REACT_APP_API_URI,
 	credentials: 'include',
 });
-console.log("httpLink", httpLink)
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'ws://localhost:4000/graphql',
+  url: process.env.REACT_APP_WS_URI as string,
 	lazy: true,
 	retryAttempts: 4500,
 	shouldRetry: () => true,
 	connectionParams: {
 		get authorization() {
 			const token = JWTManager.getToken();
-			console.log("token", token);
 			const accessToken = token ? `Bearer ${token}` : '';
 			return accessToken
 		},
-	}
+	},
+
 }));
-console.log("wsLink", wsLink)
 
 const splitLink = split(	
   ({ query }) => {

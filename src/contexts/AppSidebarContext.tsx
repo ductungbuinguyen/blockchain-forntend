@@ -68,36 +68,38 @@ const AppSidebarContextProvider = ({ children }: { children: ReactNode }) => {
 				></div>
 				<div style={{
           transform: isShowSidebar ? 'translateX(0)' : 'translateX(-100%)'
-        }} className='w-[80%] bg-gradient-to-b from-bcpayment-green-2 to-bcpayment-green-1 z-10 h-full relative px-[32px] pt-[60px] pb-[20px] text-white transition-transform duration-500'>
-					<div className='flex items-center gap-8'>
-						<AiOutlineClose className='text-[32px] font-bold' onClick={() => setIsShowSidebar(false)} />
-						<p className='font-bold text-[32px]'>Tuỳ chọn</p>
-					</div>
-					<div className='flex items-center gap-2 mt-8'>
-						<div className='rounded-full overflow-clip w-[60px] h-[60px]'>
-							<img src={base64Avatar ?? '/AvatarPlaceholder.svg'} />
+        }} className='w-[80%] bg-gradient-to-b from-bcpayment-green-2 to-bcpayment-green-1 z-10 h-full relative px-[32px] pt-[60px] pb-[20px] text-white transition-transform duration-500 overflow-y-scroll'>
+					<div className='h-[calc(100%-60px)] overflow-y-scroll'>
+						<div className='flex items-center gap-8'>
+							<AiOutlineClose className='text-[32px] font-bold' onClick={() => setIsShowSidebar(false)} />
+							<p className='font-bold text-[32px]'>Tuỳ chọn</p>
 						</div>
-						<div className='flex flex-col'>
-							<p className='text-[24px] font-bold'>{fullName}</p>
-							<p className='text-[15px] font-medium'>{email}</p>
-							<p className='text-[15px] font-medium'>{phoneNumber}</p>
-						</div>
-					</div>
-					<div className='flex flex-col justify-between w-full gap-6 mt-20'>
-						{SIDEBAR_ACTIONS.map(({ icon: Icon, label }, index) => (
-							<div key={index} className='flex items-center gap-3'>
-								<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center min-w-[50px] min-h-[50px]'>
-									<Icon className='text-white text-[30px]' />
-								</div>
-								<p className='font-bold text-[20px]'>{label}</p>
+						<div className='flex items-center gap-2 mt-8'>
+							<div className='rounded-full overflow-clip w-[60px] h-[60px]'>
+								<img src={base64Avatar ?? '/AvatarPlaceholder.svg'} />
 							</div>
-						))}
+							<div className='flex flex-col'>
+								<p className='text-[24px] font-bold'>{fullName}</p>
+								<p className='text-[15px] font-medium'>{email}</p>
+								<p className='text-[15px] font-medium'>{phoneNumber}</p>
+							</div>
+						</div>
+						<div className='flex flex-col justify-between w-full gap-6 mt-8'>
+							{SIDEBAR_ACTIONS.map(({ icon: Icon, label }, index) => (
+								<div key={index} className='flex items-center gap-3'>
+									<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center min-w-[50px] min-h-[50px]'>
+										<Icon className='text-white text-[30px]' />
+									</div>
+									<p className='font-bold text-[20px]'>{label}</p>
+								</div>
+							))}
+						</div>
 					</div>
 					<AppButtonPrimary onClick={() => {
 						logout()
             logoutClient();
             setIsShowSidebar(false);
-            }} className='!from-white !to-white !text-bcpayment-green-1 mt-20'>
+            }} className='!from-white !to-white !text-bcpayment-green-1 absolute bottom-5 w-[calc(100%-64px)]'>
 						ĐĂNG XUẤT
 					</AppButtonPrimary>
 				</div>

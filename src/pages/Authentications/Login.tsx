@@ -8,8 +8,10 @@ import AuthPasswordItem from '../../components/FormItem/AuthPasswordItem';
 import AppButtonPrimary from '../../components/AppButtonPrimary';
 import { IValidateType, fieldValidator } from '../../utils/formikValidator';
 import { Link } from "react-router-dom";
+import { useApolloClient } from '@apollo/client';
 
 const Login = () => {
+	const apolloClient = useApolloClient()
 	const { setIsAuthenticated } = useAuthContext();
 	const navigate = useNavigate();
 
@@ -23,14 +25,13 @@ const Login = () => {
 				<Formik
 					initialValues={{ email: '', password: '' }}
 					onSubmit={async ({email, password}) => {
-						console.log('login', login);
 						const response = await login({
 							variables: { loginInput: { email, password } },
 						}).catch(err => console.log("err", err));
-						console.log("response", response);
 						if (response?.data?.login?.success) {
 							JWTManager.setToken(response.data.login.accessToken as string);
 							setIsAuthenticated(true);
+							apolloClient.refetchQueries({ include: "active" })
 							navigate('..');
 						} else {
 							console.log(response?.data?.login)

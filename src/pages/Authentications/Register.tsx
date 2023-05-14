@@ -41,15 +41,6 @@ const Register = () => {
 						metaMaskPublicKey,
 						phoneNumber,
 					}) => {
-						console.log({
-							email,
-							password,
-							fullName,
-							gender,
-							identityCode,
-							metaMaskPublicKey,
-							phoneNumber,
-						})
 						const response = await register({
 							variables: {
 								registerInput: {

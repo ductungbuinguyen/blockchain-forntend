@@ -40,7 +40,7 @@ const TransferSuccess = ({ amount, transactionHash }: TransferSuccessProps) => {
 					<p className='font-medium text-[16px]text-bcpayment-gray-1'>
 						Mã giao dịch
 					</p>
-					<p className='col-span-2 font-bold text-[16px] break-words'>{transactionHash}</p>
+					<p className='col-span-2 font-bold text-[16px] break-words'>{`https://testnet.bscscan.com/tx/${transactionHash}`}</p>
 				</div>
 				<div className='flex max-w-full px-[24px] overflow-x-scroll gap-4 mt-6'>
 					{[1, 2, 3, 4, 5].map((value) => (

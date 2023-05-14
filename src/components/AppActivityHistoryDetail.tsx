@@ -23,7 +23,7 @@ const AppActivityHistoryDetail = ({ activityData, title }: AppActivityHistoryDet
     }
     const transactionItem = {
       name: 'Mã giao dịch',
-      content: transactionHash,
+      content: `https://testnet.bscscan.com/tx/${transactionHash}`,
     }
     switch (type) {
       case ActivityHistoryType.TransferMoney:

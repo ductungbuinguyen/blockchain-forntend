@@ -10,6 +10,7 @@ import AppButtonPrimary from '../components/AppButtonPrimary';
 import { UserDocument, UserQuery, useRegisterMerchantMutation, useUserQuery } from '../generated/graphql';
 import { useContractContext } from '../contexts/ContractContext';
 import AppOrderListing from '../components/AppOrderListing';
+import UserInfoSelectItem from '../components/FormItem/UserInfoSelectItem';
 
 const Merchant = () => {
 	const navigate = useNavigate();
@@ -32,8 +33,7 @@ const Merchant = () => {
 		}
 	});
 	const onFormSubmit = async (values: any) => {
-		console.log("values", values)
-    const deployContractResult = await deployECommerceContract(metaMaskPublicKey || "")
+    const deployContractResult = await deployECommerceContract(metaMaskPublicKey || "", values?.type)
     if(deployContractResult) {
       await registerMerchant({
         variables: {
@@ -61,7 +61,7 @@ const Merchant = () => {
 			<p className='mx-4 mt-6 text-black font-bold text-[18px]'>
 				Thông tin doanh nghiệp
 			</p>
-			<div className='px-4 mt-6'>
+			<div className='px-4 mt-6 overflow-y-scroll max-h-[calc(100%-280px)]'>
 				<Formik
 					initialValues={{
 						companyName: '',
@@ -70,12 +70,33 @@ const Merchant = () => {
 						websiteUrl: '',
 						storeLocation: '',
 						note: '',
+						type: 'online',
 					}}
 					onSubmit={onFormSubmit}
 				>
 					{(form) => (
 						<Form>
 							<div className='flex flex-col gap-6'>
+								<UserInfoSelectItem
+										name='type'
+										placeholder='Loại cửa hàng'
+										options={[
+											{
+												name: "online",
+												value: "online",
+											},
+											{
+												name: "offline",
+												value: "offline",
+											},
+										]}
+										validate={(value) =>
+											fieldValidator({
+												value,
+												validateTypes: [IValidateType.REQUIRED],
+											})
+										}
+									/>
 								<RegisterMerchantInputItem
 									name='companyName'
 									placeholder='Tên doanh nghiệp'

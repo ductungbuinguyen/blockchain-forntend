@@ -61,7 +61,6 @@ const AuthSelectItem = (props: AuthSelectItemProps) => {
 						return (
 							<li
 								onClick={() => {
-									console.log('value', value)
 									helper.setValue(value)
 									setIsShowOptions(false)
 								}}

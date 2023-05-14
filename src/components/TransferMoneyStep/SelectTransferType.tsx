@@ -21,7 +21,7 @@ const SelectTransferType = ({
           <p className='font-bold text-[24px]'>Chuyển tiền</p>
         </div>
       </AppHeaderWrapper>
-      <div className='py-6 bg-white mx-[24px] rounded-xl px-[30px] flex justify-between shadow'>
+      <div className='py-6 bg-white mx-[24px] rounded-xl px-[30px] flex justify-between shadow mb-8'>
         <div className='flex flex-col items-center cursor-pointer max-w-[100px]' onClick={() => onSelectTransferType("wallet")}>
           <span className='text-[40px] text-bcpayment-green-1'><IoMdWallet/></span>
           <p className='text-[15px] text-black font-medium text-center'>Đến ví bằng gmail/ SDT</p>
@@ -31,14 +31,16 @@ const SelectTransferType = ({
           <p className='text-[15px] text-black font-medium'>Đến địa chỉ</p>
         </div>
       </div>
-      <div className='bg-white shadow h-[185px] mt-8 rounded-xl mx-[24px] px-4 py-4'>
-        <p className='uppercase font-extrabold text-[15px] text-bcpayment-green-1'>TIỆN ÍCH</p>
+      <div className='h-[calc(100%-300px)] overflow-y-scroll'>
+        <div className='bg-white shadow h-[185px] rounded-xl mx-[24px] px-4 py-4'>
+          <p className='uppercase font-extrabold text-[15px] text-bcpayment-green-1'>TIỆN ÍCH</p>
+        </div>
+        <div className='flex max-w-full ml-[24px] overflow-x-scroll gap-4  mt-10 w-[calc(100%-48px)]'>
+          {[1, 2, 3, 4, 5].map((value) => (
+            <AppAdItem key={value} />
+          ))}
+        </div>
       </div>
-      <div className='flex max-w-full px-[24px] overflow-x-scroll gap-4  mt-10'>
-				{[1, 2, 3, 4, 5].map((value) => (
-					<AppAdItem key={value} />
-				))}
-			</div>
     </div>
   )
 }

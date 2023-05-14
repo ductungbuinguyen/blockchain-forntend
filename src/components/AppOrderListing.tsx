@@ -26,14 +26,14 @@ const AppOrderListing = ({ type }: AppOrderListingProps) => {
 				?.toLowerCase()
 				?.includes(searValueLowerCase)
 		);
-	});
+	}).sort((a, b) => dayjs(b?.orderTime).valueOf() - dayjs(a?.orderTime).valueOf())
 	const filteredOrdersAsSeller = (ordersAsSeller ?? []).filter((order) => {
 		const searValueLowerCase = searchValue.toLowerCase();
 		return (
 			order?.name?.toLowerCase()?.includes(searValueLowerCase) ||
 			order?.buyer?.fullName?.toLowerCase()?.includes(searValueLowerCase)
 		);
-	});
+	}).sort((a, b) => dayjs(b?.orderTime).valueOf() - dayjs(a?.orderTime).valueOf());
 	return (
 		<div className='relative w-full h-screen bg-bcpayment-green-4 overflow-clip'>
 			<AppHeaderWrapper bottomOffset={30}>
@@ -45,7 +45,7 @@ const AppOrderListing = ({ type }: AppOrderListingProps) => {
 					<p className='font-bold text-[24px]'>{`Đơn hàng ${type === 'buy' ? 'mua' : 'bán'}`}</p>
 				</div>
 			</AppHeaderWrapper>
-			<div className='relative w-full px-[20px] h-[85%]'>
+			<div className='relative w-full px-[20px] h-[calc(100%-120px)]'>
 				<div className='pt-8 bg-white rounded-t-xl px-[15px] shadow w-full h-full'>
 					<input
 						className='bg-bcpayment-green-3 w-full py-1 px-3 text-white rounded-[15px] placeholder:text-white focus-visible:outline-none placeholder:text-center text-center'
@@ -56,7 +56,7 @@ const AppOrderListing = ({ type }: AppOrderListingProps) => {
 							setSearchValue(event.target.value);
 						}}
 					/>
-					<div className='flex flex-col gap-6 pt-8 mb-8 overflow-x-visible overflow-y-scroll h-[90%]'>
+					<div className='flex flex-col gap-6 pt-8 mb-8 overflow-x-visible overflow-y-scroll max-h-[calc(100%-45px)]'>
 						{type === 'buy'
 							? filteredOrdersAsBuyer.map((order) => {
 									const { price, contract, creationTime, name, id } =

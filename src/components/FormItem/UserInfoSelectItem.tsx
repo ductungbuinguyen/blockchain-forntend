@@ -4,7 +4,7 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 import { FieldAttributes } from '../../interfaces/transferMoney';
 
 export type UserInfoSelectItemProps = FieldAttributes<string> & {
-	label: string;
+	label?: string;
 	options: {
 		name: string;
 		value: any;
@@ -12,7 +12,7 @@ export type UserInfoSelectItemProps = FieldAttributes<string> & {
 };
 
 const UserInfoSelectItem = (props: UserInfoSelectItemProps) => {
-	const { id, name, label, options } = props;
+	const { id, name, label, options, disabled } = props;
 	const [field, meta, helper] = useField(props);
 	const [isShowOptions, setIsShowOptions] = useState(false);
 	const modalRef = useRef<HTMLDivElement>(null);
@@ -34,16 +34,16 @@ const UserInfoSelectItem = (props: UserInfoSelectItemProps) => {
 	)?.name;
 	return (
 		<div ref={modalRef} className='relative flex flex-col gap-1 w-full'>
-			<label
+			{label && <label
 				htmlFor={id || name}
 				className='text-bcpayment-green-1 font-semibold text-[13px] mx-1'
 			>
 				{label}
-			</label>
+			</label>}
 			<div className='relative w-full'>
 				<input
 					maxLength={0}
-					className='text-[15px] py-[10px] border-b placeholder:text-bcpayment-gray-2 outline-none !bg-white w-full rounded-3xl shadow-xl px-4'
+					className='text-[15px] py-[10px] border-b placeholder:text-bcpayment-gray-2 outline-none w-full rounded-3xl shadow-xl px-4'
 					{...field}
 					{...(props as any)}
 					value={displayValue}
@@ -59,7 +59,7 @@ const UserInfoSelectItem = (props: UserInfoSelectItemProps) => {
 			{meta.touched && meta.error ? (
 				<div className='text-red-500 text-[15px]'>{meta.error}</div>
 			) : null}
-			{isShowOptions && (
+			{!disabled && isShowOptions && (
 				<ul className='absolute -bottom-1 w-full overflow-hidden text-base border rounded-md shadow translate-y-[100%] z-20'>
 					{options.map(({ name, value }, index) => {
 						const isActive = value === meta.value;

@@ -67,16 +67,14 @@ const Home = () => {
 	const { open } = useAppSidebar();
 	// const { open: openNoti} = useAppNoti()
 	const handleScan: QrcodeSuccessCallback = async (decodedText) => {
-		console.log('decodedText', decodedText);
 		if(decodedText) {
 			const data = JSON.parse(decodedText)
 			const { contractAddress, amount, orderDecentralizedId } = data ?? {};
-			const buyResult = await buy({
+			await buy({
 				amount,
 				contractAddress,
 				orderDecentralizedId
 			})
-			console.log("buyResult", buyResult);
 		}
 	};
 	// const { data, loading } = useUsersQuery({ fetchPolicy: 'no-cache' });
@@ -101,56 +99,58 @@ const Home = () => {
 		</div>
 	) : (
 		<div className='relative w-screen h-screen bg-bcpayment-green-4'>
-			<AppHeaderWrapper bottomOffset={40}>
-				<div>
-					<FaBars
-						className='text-white text-[30px] cursor-pointer'
-						onClick={open}
-					/>
+				<AppHeaderWrapper bottomOffset={40}>
+					<div>
+						<FaBars
+							className='text-white text-[30px] cursor-pointer'
+							onClick={open}
+						/>
+					</div>
+					{/* <div className='flex justify-between w-full mt-5'>
+						{HEADER_ITEMS.map(({ icon: Icon, label, url }, index) => (
+							<Link to={url} key={index} className='flex flex-col items-center gap-2'>
+									<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center w-[50px] h-[50px]'>
+										<Icon className='text-white text-[30px]' />
+									</div>
+									<p className='uppercase font-bold text-[12px] text-white'>
+										{label}
+									</p>
+							</Link>
+						))}
+					</div> */}
+				</AppHeaderWrapper>
+				<div className='bg-white mx-[24px] rounded-xl p-6 uppercase mb-8'>
+					<p className='font-bold text-bcpayment-orange text-[20px]'>
+						· Tài khoản chính
+					</p>
+					<p className='font-bold text-[40px] bg-gradient-to-b from-white via-bcpayment-green-2 to-bcpayment-green-1 text-transparent bg-clip-text'>
+						{`${accountBalance} BNB`}
+					</p>
 				</div>
-				{/* <div className='flex justify-between w-full mt-5'>
-					{HEADER_ITEMS.map(({ icon: Icon, label, url }, index) => (
-						<Link to={url} key={index} className='flex flex-col items-center gap-2'>
-								<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center w-[50px] h-[50px]'>
-									<Icon className='text-white text-[30px]' />
-								</div>
-								<p className='uppercase font-bold text-[12px] text-white'>
-									{label}
-								</p>
-						</Link>
-					))}
-				</div> */}
-			</AppHeaderWrapper>
-			<div className='bg-white mx-[24px] rounded-xl p-6 uppercase'>
-				<p className='font-bold text-bcpayment-orange text-[20px]'>
-					· Tài khoản chính
-				</p>
-				<p className='font-bold text-[40px] bg-gradient-to-b from-white via-bcpayment-green-2 to-bcpayment-green-1 text-transparent bg-clip-text'>
-					{`${accountBalance} BNB`}
-				</p>
-			</div>
-			<div className='px-6 py-4 bg-white mx-[24px] rounded-t-xl mt-8'>
-				<p className='uppercase text-bcpayment-green-1 font-extrabold text-[15px] mb-4'>
-					Dịch vụ
-				</p>
-				<div className='flex justify-between w-full'>
-					{SERVICE_ITEMS.map(({ icon: Icon, label, url }, index) => (
-						<Link to={url} key={index} className='flex flex-col items-center gap-2'>
-							<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center w-[70px] h-[70px]'>
-								<Icon className='text-[40px] text-bcpayment-green-1' />
-							</div>
-							<p className='text-[10px] font-semibold max-w-[50px] text-center'>
-								{label}
-							</p>
-						</Link>
-					))}
+				<div className='max-h-[calc(100%-305px)] overflow-y-scroll'>
+					<div className='px-6 py-4 bg-white mx-[24px] rounded-t-xl'>
+						<p className='uppercase text-bcpayment-green-1 font-extrabold text-[15px] mb-4'>
+							Dịch vụ
+						</p>
+						<div className='flex justify-between w-full'>
+							{SERVICE_ITEMS.map(({ icon: Icon, label, url }, index) => (
+								<Link to={url} key={index} className='flex flex-col items-center gap-2'>
+									<div className='bg-bcpayment-green-3 rounded-lg flex items-center justify-center w-[70px] h-[70px]'>
+										<Icon className='text-[40px] text-bcpayment-green-1' />
+									</div>
+									<p className='text-[10px] font-semibold max-w-[50px] text-center'>
+										{label}
+									</p>
+								</Link>
+							))}
+						</div>
+					</div>
+					<div className='flex max-w-full ml-[24px] overflow-x-scroll gap-4  mt-16 w-[calc(100%-48px)]'>
+						{[1, 2, 3, 4, 5].map((value) => (
+							<AppAdItem key={value} />
+						))}
+					</div>
 				</div>
-			</div>
-			<div className='flex max-w-full px-[24px] overflow-x-scroll gap-4  mt-16'>
-				{[1, 2, 3, 4, 5].map((value) => (
-					<AppAdItem key={value} />
-				))}
-			</div>
 			{/* <button onClick={() => openNoti({
 				description: "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
 				title: "simply dummy text of the"

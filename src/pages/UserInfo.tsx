@@ -22,6 +22,7 @@ const UserInfo = () => {
 	const [updateUserMerchantMetadata] = useUpdateUserMerchantMetadataMutation()
 	const { data: userData } = useUserQuery();
 	const {
+		id,
 		fullName,
 		email,
 		gender,
@@ -40,6 +41,7 @@ const UserInfo = () => {
 		note,
 		storeLocation,
 		websiteUrl,
+		type,
 	} = merchantMetaData ?? {};
 	return (
 		<div className='relative w-full h-screen bg-bcpayment-green-4'>
@@ -57,7 +59,7 @@ const UserInfo = () => {
 					/>
 				</div>
 			</AppHeaderWrapper>
-			<div className='max-h-[80%] overflow-y-scroll'>
+			<div className='max-h-[calc(100%-150px)] overflow-y-scroll'>
 				<p className='mx-4 mt-6 text-black font-bold text-[18px]'>
 					Thông tin cá nhân
 				</p>
@@ -246,6 +248,7 @@ const UserInfo = () => {
 									websiteUrl,
 									storeLocation,
 									note,
+									type,
 								}}
 								enableReinitialize
 								onSubmit={(values) => {
@@ -261,6 +264,28 @@ const UserInfo = () => {
 								{(form) => (
 									<Form>
 										<div className='flex flex-col gap-6'>
+											<UserInfoSelectItem
+												disabled
+												name='type'
+												placeholder='Loại cửa hàng'
+												label='Loại cửa hàng'
+												validate={(value) =>
+													fieldValidator({
+														value,
+														validateTypes: [IValidateType.REQUIRED],
+													})
+												}
+												options={[
+													{
+														name: 'online',
+														value: 'online',
+													},
+													{
+														name: 'offline',
+														value: 'offline',
+													},
+												]}
+											/>
 											<UserInfoInputItem
 												name='companyName'
 												placeholder='Tên doanh nghiệp'
@@ -314,6 +339,12 @@ const UserInfo = () => {
 												name='note'
 												placeholder='Ghi chú'
 												label='Ghi chú'
+											/>
+											<UserInfoCopyItem
+												name='apiKey'
+												label='Api key id'
+												disabled
+												value={id ?? ''}
 											/>
 											<UserInfoCopyItem
 												name='apiSecretKey'

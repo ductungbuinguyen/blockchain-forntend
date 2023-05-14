@@ -7,7 +7,6 @@ import HistoryActivityBriefItem from '../components/HistoryActivityBriefItem';
 const ActivityHistory = () => {
   const navigate = useNavigate();
   const activityHistories = useGetActivityHistories()
-  console.log('activityHistories', activityHistories)
   return (
     <div className='relative w-full h-screen bg-bcpayment-green-4 overflow-clip'>
       <AppHeaderWrapper bottomOffset={30}>
@@ -19,9 +18,9 @@ const ActivityHistory = () => {
 					<p className='font-bold text-[24px]'>Lịch sử hoạt động</p>
 				</div>
 			</AppHeaderWrapper>
-      <div className='relative w-full px-[20px] h-[85%]'>
+      <div className='relative w-full px-[20px] h-[calc(100%-120px)]'>
 				<div className='bg-white rounded-t-xl px-[15px] shadow w-full h-full'>
-					<div className='flex flex-col h-full gap-6 pt-8 mb-8 overflow-x-visible overflow-y-scroll max-h-[680px]'>
+					<div className='flex flex-col h-full gap-6 pt-8 mb-8 overflow-x-visible overflow-y-scroll max-h-[calc(100%-20px)]'>
             {activityHistories.map(({timeString, activities}) => (
                 <div key={timeString}>
                   <p className='font-extrabold uppercase text-bcpayment-green-1 text-[15px]'>{timeString}</p>

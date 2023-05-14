@@ -17,7 +17,7 @@ const AppNoteItem = (props: AppNoteItemProps) => {
 					style={{
 						paddingTop: inputType === "transferMoneyNote" ? 45 : 15
 					}}
-					className='shadow-xl px-4 pb-4 text-medium text-[15px] w-full outline-none rounded-3xl'
+					className='shadow-md px-4 pb-4 text-medium text-[15px] w-full outline-none rounded-3xl'
 					{...field}
 					{...(props as any)}
 				/>

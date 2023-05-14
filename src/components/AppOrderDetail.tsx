@@ -31,7 +31,6 @@ const AppOrderDetail = ({ orderId, type }: AppOrderDetailProps) => {
 		shipDeadline,
 		isSellerConfirm,
 	} = orderData as any;
-	console.log("orderData", orderData)
 	const { seller } = targetContract as any ?? {};
 	const { buy, ship, timeout, buyerConfirmShipped, sellerConfirmShipped } =
 		useContractContext();
@@ -106,6 +105,7 @@ const AppOrderDetail = ({ orderId, type }: AppOrderDetailProps) => {
 				else if (!isSellerConfirm) {
 					return (
 						<AppButtonPrimary
+							disabled={dayjs().isBefore(dayjs(confirmDeadline!*1000))}
 							onClick={() =>
 								sellerConfirmShipped({
 									contractAddress: sellerContract?.address ?? '',

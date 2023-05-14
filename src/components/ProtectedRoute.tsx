@@ -7,7 +7,6 @@ import {
 	UserDocument,
 	ActivityHistoryType,
 	OrderStatus,
-	useUserQuery,
 } from '../generated/graphql';
 import { useApolloClient } from '@apollo/client';
 import { useEffect } from 'react';
@@ -18,7 +17,6 @@ const AuthenticatedWrapper = ({ children }: { children: JSX.Element }) => {
 	const { userId } = useAuthContext();
 	const { open } = useAppNoti()
 	const { data: dataSubscription } = useActivityHistorySubscription();
-	const { data: dataUser } = useUserQuery();
 
 	useEffect(() => {
 		if (dataSubscription) {
@@ -43,15 +41,10 @@ const AuthenticatedWrapper = ({ children }: { children: JSX.Element }) => {
 
 					if (!user) return data;
 					const isBuyerOrder = userId?.toString() === targetOrder?.buyer?.id?.toString();
-					console.log("isBuyerOrder", isBuyerOrder)
 					const targetOrderAsBuyerIndex = user.ordersAsBuyer?.findIndex((value: any) => value?.id?.toString() === targetOrder?.id?.toString())
-					console.log("targetOrderAsBuyerIndex", targetOrderAsBuyerIndex)
 					const targetOrderAsBuyer = targetOrderAsBuyerIndex && user.ordersAsBuyer && user.ordersAsBuyer[targetOrderAsBuyerIndex]
-					console.log("targetOrderAsBuyer", targetOrderAsBuyer)
 					const targetOrderAsSellerIndex = user.contract?.orders?.findIndex((value: any) => value?.id?.toString() === targetOrder?.id?.toString())
-					console.log("targetOrderAsSellerIndex", targetOrderAsSellerIndex)
 					const targetOrderAsSeller = targetOrderAsSellerIndex && user?.contract?.orders && user.contract.orders[targetOrderAsSellerIndex]
-					console.log("targetOrderAsSeller", targetOrderAsSeller)
 					let targetOrderValue = isBuyerOrder ? targetOrderAsBuyer : targetOrderAsSeller
 					const newActivityFragment: any = {
 						__typename: 'ActivityHistory',
@@ -61,7 +54,6 @@ const AuthenticatedWrapper = ({ children }: { children: JSX.Element }) => {
 						type,
 						targetOrder: targetOrderValue || targetOrder
 					}
-					console.log("newActivityFragment", newActivityFragment)
 					switch (type) {
 						case ActivityHistoryType.TransferMoney:
 							const isSender = userId === sender?.id;
@@ -118,7 +110,6 @@ const AuthenticatedWrapper = ({ children }: { children: JSX.Element }) => {
 									title: `Tạo đơn hàng ${targetOrder?.name} thành công`,
 									description: 'Xem chi tiết tại lịch sử giao dịch'
 								})
-								console.log("ordersAsBuyer", user.ordersAsBuyer)
 							} else {
 								user.contract && (user.contract.orders = [
 									...user.contract.orders ?? [],
@@ -257,25 +248,17 @@ const AuthenticatedWrapper = ({ children }: { children: JSX.Element }) => {
 							}
 						break;
 					}
-					console.log("edittedUser", user)
 					return { user }
 				}
 			);
 		}
 	}, [dataSubscription])
-	console.log("dataUser", dataUser)
-	console.log("dataSubscription", dataSubscription)
 	return children;
 };
 
 export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 	const { isAuthenticated } = useAuthContext();
-	console.log('isAuthenticated', isAuthenticated);
 	const { isConnectedWithRightChainAndRightAccount } = useContractContext();
-	console.log(
-		'isConnectedWithRightChainAndRightAccount',
-		isConnectedWithRightChainAndRightAccount
-	);
 	if (!isAuthenticated) {
 		return <Navigate to='/login' />;
 	}

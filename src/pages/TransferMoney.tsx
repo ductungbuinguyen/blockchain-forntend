@@ -21,7 +21,6 @@ const TransferMoney = () => {
 				},
 				(data) => {
 					const { activityHistory, success } = dataResponse?.createActivityHistory ?? {}
-					console.log("response", data)
 					const { receiverAddress, receiver} = activityHistory ?? {}
 					if(!success) return data
 					let user = JSON.parse(JSON.stringify(data?.user));
@@ -84,8 +83,6 @@ const TransferMoney = () => {
 					onBackButtonClick={onBackButtonClick}
 					searchValue={searchValue}
 					onSearchValueChange={(value) => {
-						console.log('value', value);
-						console.log('currentStepData', currentStepData);
 						setStepHistory((prev) => {
 							const changedCurrentStep = {
 								key: currentStepKey,
@@ -147,7 +144,7 @@ const TransferMoney = () => {
 							console.error("error", error);
 						});
 						if(result) {
-							const resultCreateActivity = await createActivityHistory({
+							await createActivityHistory({
 								variables: {
 									createActivityHistoryInput: {
 										amount: Number(value),
@@ -161,7 +158,6 @@ const TransferMoney = () => {
 									}
 								},
 							})
-							console.log("resultCreateActivity", resultCreateActivity)
 							setStepHistory((prev) => [
 								...prev,
 								{

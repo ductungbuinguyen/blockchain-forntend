@@ -35,14 +35,11 @@ export const useAuthContext = () => useContext(AuthContext)
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(defaultIsAuthenticated)
 	const [userId, setUserId] = useState<User["id"]>(null)
-	console.log("userId", userId)
 	const checkAuth = useCallback(async () => {
 		const token = JWTManager.getToken()
-		console.log('token', token)
 		if (token) {
 			setIsAuthenticated(true)
 			const userId = JWTManager.getUserId()
-			console.log('userid', userId)
 			setUserId(userId)
 		}
 		else {
@@ -50,7 +47,6 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 			if (success) {
 				setIsAuthenticated(true)
 				const userId = JWTManager.getUserId()
-				console.log('userid', userId)
 				setUserId(userId)
 			}
 		}

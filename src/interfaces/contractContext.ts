@@ -24,5 +24,5 @@ export interface IContractContext {
 	sellerConfirmShipped: (params: ITimeoutParams) => Promise<void>;
 	ship: (params: ITimeoutParams) => Promise<void>;
 	timeout: (params: ITimeoutParams) => Promise<any>;
-	deployECommerceContract: (merchantAddress: string) => Promise<any>;
+	deployECommerceContract: (merchantAddress: string, type: string) => Promise<any>;
 }
